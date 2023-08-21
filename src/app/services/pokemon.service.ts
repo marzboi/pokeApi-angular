@@ -23,7 +23,9 @@ export class PokemonService {
   getPokemons(url = this.url) {
     return this.http.get<ApiResponse>(url).pipe(
       tap((answer) => {
+        this.next$.next(answer.next);
         this.allPokemon$.next(answer.results);
+        this.previous$.next(answer.previous);
       })
     );
   }

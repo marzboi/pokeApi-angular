@@ -15,4 +15,8 @@ export type PokemonDetails = {
   id: number;
   height: number;
   weight: number;
+  sprites: {
+    back_default: string | null;
+    front_default: string | null;
+  };
 };

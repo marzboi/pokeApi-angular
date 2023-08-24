@@ -8,6 +8,7 @@ import { PokemonService } from 'src/app/services/pokemon.service';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent {
+  currentUrl: string = '';
   next: string | null = null;
   previous: string | null = null;
   pokemonLimit: number = 20;
@@ -18,6 +19,9 @@ export class MenuComponent {
     this.pokemonService.next$.subscribe((next) => (this.next = next));
     this.pokemonService.previous$.subscribe(
       (previous) => (this.previous = previous)
+    );
+    this.pokemonService.currentUrl$.subscribe(
+      (current) => (this.currentUrl = current)
     );
   }
 
@@ -30,6 +34,8 @@ export class MenuComponent {
   }
 
   handleLimitChange() {
-    this.pokemonService.getPokemons(undefined, this.pokemonLimit).subscribe();
+    this.pokemonService
+      .getPokemons(this.currentUrl.split('&')[0], this.pokemonLimit)
+      .subscribe(() => {});
   }
 }

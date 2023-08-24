@@ -18,10 +18,12 @@ export class PokemonService {
   next$: BehaviorSubject<string | null>;
   previous$: BehaviorSubject<string | null>;
   allPokemon$: BehaviorSubject<PokemonDetails[] | null>;
+  pokemon$: BehaviorSubject<PokemonDetails | null>;
   constructor(private http: HttpClient) {
     this.next$ = new BehaviorSubject<string | null>(null);
     this.previous$ = new BehaviorSubject<string | null>(null);
     this.allPokemon$ = new BehaviorSubject<PokemonDetails[] | null>(null);
+    this.pokemon$ = new BehaviorSubject<PokemonDetails | null>(null);
   }
 
   getPokemons(url = this.url) {
@@ -38,6 +40,31 @@ export class PokemonService {
             this.allPokemon$.next(details);
           })
         );
+      })
+    );
+  }
+
+  getPokemonsOld(url = this.url) {
+    return this.http.get<ApiResponse>(url).pipe(
+      map((answer) => {
+        this.next$.next(answer.next);
+        this.previous$.next(answer.previous);
+        let answers: any[] = [];
+        answer.results.forEach((item) => {
+          this.http
+            .get(item.url)
+            .pipe()
+            .forEach((item) => answers.push(item));
+        });
+        this.allPokemon$.next(answers);
+      })
+    );
+  }
+
+  getSinglePokemonDetail(id: number) {
+    return this.http.get<PokemonDetails>(this.url + '/' + id).pipe(
+      map((answer) => {
+        this.pokemon$.next(answer);
       })
     );
   }

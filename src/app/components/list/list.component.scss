@@ -1,15 +1,7 @@
-ul {
-  margin: 1rem;
-  li {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-.container {
-  align-items: center;
+.btn-container {
   display: flex;
+  justify-content: center;
   button {
-    margin: 1rem;
+    margin: 10px;
   }
 }

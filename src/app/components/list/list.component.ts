@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Pokemon, PokemonDetails } from 'src/app/types/api-response';
 
@@ -11,7 +12,11 @@ export class ListComponent {
   pokemons: PokemonDetails[] | null = null;
   next: string | null = null;
   previous: string | null = null;
-  constructor(private pokemonService: PokemonService) {}
+  constructor(
+    private pokemonService: PokemonService,
+    private router: Router,
+    private zone: NgZone
+  ) {}
 
   ngOnInit(): void {
     this.getPokemons();
@@ -32,5 +37,9 @@ export class ListComponent {
       this.next = this.pokemonService.next$.value;
       this.previous = this.pokemonService.previous$.value;
     });
+  }
+
+  handleNavigaToDetails(id: number) {
+    this.zone.run(() => this.router.navigate([`pokemon/${id}`]));
   }
 }

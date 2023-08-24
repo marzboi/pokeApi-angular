@@ -1,13 +1,13 @@
-<div class="container">
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let item of pokemons">
-      <span>{{item.id}}</span>
+<div>
+  <ul>
+    <li *ngFor="let item of pokemons">
+      <span>#{{item.id}} </span>
       <span>{{item.name}} </span>
-      <img src={{item.sprites.front_default}} alt={{item.name}}>
+      <img src={{item.sprites.front_default}} alt={{item.name}} (click)="handleNavigaToDetails(item.id)">
     </li>
   </ul>
 </div>
-<div class="container">
+<div class="btn-container">
   <button class="btn btn-danger" (click)="loadNextOrPreviousPokemons(previous)">Previous</button>
   <button class="btn btn-danger" (click)="loadNextOrPreviousPokemons(next)">Next</button>
 </div>

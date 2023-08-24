@@ -22,16 +22,8 @@ export class ListComponent {
     this.getPokemons();
   }
 
-  getPokemons(): void {
-    this.pokemonService.getPokemons().subscribe(() => {
-      this.pokemons = this.pokemonService.allPokemon$.value;
-      this.next = this.pokemonService.next$.value;
-      this.previous = this.pokemonService.previous$.value;
-    });
-  }
-
-  loadNextOrPreviousPokemons(url: string | null): void {
-    if (!url) return;
+  getPokemons(url?: string | null): void {
+    !url ? (url = this.pokemonService.url) : url;
     this.pokemonService.getPokemons(url).subscribe(() => {
       this.pokemons = this.pokemonService.allPokemon$.value;
       this.next = this.pokemonService.next$.value;

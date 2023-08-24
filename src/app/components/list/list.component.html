@@ -7,7 +7,8 @@
     </li>
   </ul>
 </div>
-<div class="btn-container">
-  <button class="btn btn-danger" (click)="loadNextOrPreviousPokemons(previous)">Previous</button>
-  <button class="btn btn-danger" (click)="loadNextOrPreviousPokemons(next)">Next</button>
+
+<div>
+  <button (click)="getPokemons(previous)">Previous</button>
+  <button (click)="getPokemons(next)">Next</button>
 </div>

@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { PokemonService } from 'src/app/services/pokemon.service';
-import { Pokemon, PokemonDetails } from 'src/app/types/api-response';
+import { PokemonDetails } from 'src/app/types/api-response';
 
 @Component({
   selector: 'app-list',
@@ -10,8 +10,6 @@ import { Pokemon, PokemonDetails } from 'src/app/types/api-response';
 })
 export class ListComponent {
   pokemons: PokemonDetails[] | null = null;
-  next: string | null = null;
-  previous: string | null = null;
   constructor(
     private pokemonService: PokemonService,
     private router: Router,
@@ -19,15 +17,8 @@ export class ListComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getPokemons();
-  }
-
-  getPokemons(url?: string | null): void {
-    !url ? (url = this.pokemonService.url) : url;
-    this.pokemonService.getPokemons(url).subscribe(() => {
-      this.pokemons = this.pokemonService.allPokemon$.value;
-      this.next = this.pokemonService.next$.value;
-      this.previous = this.pokemonService.previous$.value;
+    this.pokemonService.allPokemon$.subscribe((pokemons) => {
+      this.pokemons = pokemons;
     });
   }
 

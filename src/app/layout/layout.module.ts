@@ -4,10 +4,16 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LayoutComponent } from './layout/layout.component';
 import { MenuComponent } from './menu/menu.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, LayoutComponent, MenuComponent],
-  imports: [CommonModule],
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    LayoutComponent,
+    MenuComponent,
+  ],
+  imports: [CommonModule, FormsModule],
   exports: [LayoutComponent],
 })
 export class LayoutModule {}

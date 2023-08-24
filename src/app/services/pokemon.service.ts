@@ -27,8 +27,8 @@ export class PokemonService {
     this.pokemon$ = new BehaviorSubject<PokemonDetails | null>(null);
   }
 
-  getPokemons(url = this.url, limit?: number) {
-    limit ? (url = this.url + '?limit=' + limit) : url;
+  getPokemons(url = this.url, limit?: number): Observable<any> {
+    limit ? (url = url + '?limit=' + limit) : url;
     return this.http.get<ApiResponse>(url).pipe(
       mergeMap((apiResponse) => {
         const detailObservables = apiResponse.results.map((pokemon) => {

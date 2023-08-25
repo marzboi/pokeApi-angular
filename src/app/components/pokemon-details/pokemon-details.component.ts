@@ -19,7 +19,7 @@ export class PokemonDetailsComponent {
   ) {}
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      this.pokemonService.getSinglePokemonDetail(params['id']).subscribe(() => {
+      this.pokemonService.getSinglePokemonById(params['id']).subscribe(() => {
         this.pokemon = this.pokemonService.pokemon$.value;
       });
     });

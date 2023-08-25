@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiResponse, Pokemon, PokemonDetails } from '../types/api-response';
+import { Pokemon } from '../types/api-response';
+import {
+  ApiResponse,
+  ApiResponseType,
+  PokemonDetails,
+} from '../types/api-response';
 import {
   BehaviorSubject,
   Observable,
@@ -14,7 +19,7 @@ import {
   providedIn: 'root',
 })
 export class PokemonService {
-  public url: string = 'https://pokeapi.co/api/v2/pokemon?offset=0';
+  public url: string = 'https://pokeapi.co/api/v2/';
   currentUrl$: BehaviorSubject<string>;
   next$: BehaviorSubject<string | null>;
   previous$: BehaviorSubject<string | null>;
@@ -29,8 +34,8 @@ export class PokemonService {
     this.pokemon$ = new BehaviorSubject<PokemonDetails | null>(null);
   }
 
-  getPokemons(url?: string, limit?: number): Observable<any> {
-    url ? (url = url) : (url = this.url);
+  getPokemons(url?: string, limit?: number) {
+    url ? (url = url) : (url = this.url + 'pokemon?offset=0');
     limit ? (url = url.split('&')[0] + '&limit=' + limit) : url;
     this.currentUrl$.next(url);
     return this.http.get<ApiResponse>(url).pipe(
@@ -50,13 +55,37 @@ export class PokemonService {
     );
   }
 
-  getSinglePokemonDetail(id: number) {
-    return this.http
-      .get<PokemonDetails>(this.url.split('?')[0] + '/' + id)
-      .pipe(
-        map((answer) => {
-          this.pokemon$.next(answer);
-        })
-      );
+  getSinglePokemonById(id: number) {
+    return this.http.get<PokemonDetails>(this.url + 'pokemon/' + id).pipe(
+      map((answer) => {
+        this.pokemon$.next(answer);
+      })
+    );
+  }
+
+  getSinglePokemonByName(name: string) {
+    return this.http.get<PokemonDetails>(this.url + 'pokemon/' + name).pipe(
+      map((answer) => {
+        this.pokemon$.next(answer);
+      })
+    );
+  }
+
+  getPokemonByType(type: number) {
+    return this.http.get<ApiResponseType>(this.url + 'type/' + type).pipe(
+      mergeMap((apiResponse) => {
+        const detailObservables = apiResponse.pokemon.map((pokemon) => {
+          return this.http.get<PokemonDetails>(pokemon.pokemon.url);
+        });
+
+        return forkJoin(detailObservables).pipe(
+          map((details) => {
+            this.next$.next(null);
+            this.previous$.next(null);
+            this.allPokemon$.next(details);
+          })
+        );
+      })
+    );
   }
 }

@@ -1,6 +1,7 @@
 <section class="list-generator">
   <ul class="nav-buttons">
-    <li><button (click)="handleNextOrPrevious()" class="return">Reset</button></li>
+    <li><button (click)="handleNextOrPrevious('https://pokeapi.co/api/v2/pokemon?offset=0')"
+        class="return">Reset</button></li>
     <li><button (click)="handleNextOrPrevious(previous)">Previous</button></li>
     <li><button (click)="handleNextOrPrevious(next)" class="next">Next</button></li>
   </ul>
@@ -11,6 +12,24 @@
         <option value="40">40</option>
         <option value="60">60</option>
       </select>
+    </label>
+  </div>
+  <div>
+    <label>Filter by type
+      <select [(ngModel)]="type" (change)="handlePokemonByType()">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </label>
+  </div>
+
+  <div>
+    <label>Filter by name
+      <input type="text" [(ngModel)]="search" />
+      <button (click)="handlePokemonByName()">Search by Name</button>
     </label>
   </div>
 </section>

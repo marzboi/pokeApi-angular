@@ -1,6 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { PokemonService } from 'src/app/services/pokemon.service';
+import { PokemonDetails } from 'src/app/types/api-response';
 
 @Component({
   selector: 'app-menu',
@@ -12,7 +13,14 @@ export class MenuComponent {
   next: string | null = null;
   previous: string | null = null;
   pokemonLimit: number = 20;
-  constructor(private pokemonService: PokemonService) {}
+  type: number = 0;
+  search: string = '';
+  pokemon: PokemonDetails | null = null;
+  constructor(
+    private pokemonService: PokemonService,
+    private router: Router,
+    private zone: NgZone
+  ) {}
 
   ngOnInit(): void {
     this.pokemonService.getPokemons().subscribe(() => {});
@@ -36,6 +44,19 @@ export class MenuComponent {
   handleLimitChange() {
     this.pokemonService
       .getPokemons(this.currentUrl.split('&')[0], this.pokemonLimit)
-      .subscribe(() => {});
+      .subscribe();
+  }
+
+  handlePokemonByType() {
+    this.pokemonService.getPokemonByType(this.type).subscribe();
+  }
+
+  handlePokemonByName() {
+    this.pokemonService.getSinglePokemonByName(this.search).subscribe(() => {
+      this.pokemon = this.pokemonService.pokemon$.value;
+      this.zone.run(() =>
+        this.router.navigate([`pokemon/${this.pokemon?.id}`])
+      );
+    });
   }
 }

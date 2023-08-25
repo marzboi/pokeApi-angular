@@ -5,6 +5,10 @@ export type ApiResponse = {
   results: Pokemon[];
 };
 
+export type ApiResponseType = {
+  pokemon: { pokemon: Pokemon }[];
+};
+
 export type Pokemon = {
   name: string;
   url: string;

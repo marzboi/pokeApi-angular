@@ -52,11 +52,13 @@ export class MenuComponent {
   }
 
   handlePokemonByName() {
-    this.pokemonService.getSinglePokemonByName(this.search).subscribe(() => {
-      this.pokemon = this.pokemonService.pokemon$.value;
-      this.zone.run(() =>
-        this.router.navigate([`pokemon/${this.pokemon?.id}`])
-      );
-    });
+    this.pokemonService
+      .getSinglePokemonByName(this.search.toLowerCase())
+      .subscribe(() => {
+        this.pokemon = this.pokemonService.pokemon$.value;
+        this.zone.run(() =>
+          this.router.navigate([`pokemon/${this.pokemon?.id}`])
+        );
+      });
   }
 }

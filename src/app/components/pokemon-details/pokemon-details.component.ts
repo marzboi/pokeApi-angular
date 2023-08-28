@@ -11,6 +11,7 @@ import { PokemonDetails } from 'src/app/types/api-response';
 export class PokemonDetailsComponent {
   params: Params = { id: '' };
   pokemon: PokemonDetails | null = null;
+  loading = true;
   constructor(
     private pokemonService: PokemonService,
     private route: ActivatedRoute,
@@ -21,6 +22,7 @@ export class PokemonDetailsComponent {
     this.route.params.subscribe((params) => {
       this.pokemonService.getSinglePokemonById(params['id']).subscribe(() => {
         this.pokemon = this.pokemonService.pokemon$.value;
+        this.loading = false;
       });
     });
   }

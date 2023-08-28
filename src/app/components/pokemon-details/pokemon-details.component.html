@@ -1,8 +1,20 @@
-<div>
-  <h1>{{pokemon?.name}}</h1>
-  <img src={{pokemon?.sprites?.front_default}} alt={{pokemon?.name}}>
-  <img src={{pokemon?.sprites?.back_default}} alt={{pokemon?.name}}>
-</div>
+<section *ngIf="!loading && pokemon">
+  <div class="card" style="width: 16rem;">
+    <img class="card-img-top" src={{pokemon.sprites.front_default}} alt={{pokemon.name}}>
+    <div class="card-body">
+      <h1 class="card-title"> {{pokemon.name.slice(0, 1).toUpperCase() + pokemon.name.slice(1)}} </h1>
+      <p class="card-text">
+        Height: {{pokemon.height}}
+      </p>
+      <p class="card-text">
+        Weight: {{pokemon.weight}}
+    </div>
+  </div>
 
 
-<button (click)="handleNavigateHome()">Return to list</button>
+  <button (click)="handleNavigateHome()">Return to list</button>
+</section>
+
+<section *ngIf="loading">
+  <img src="assets/loading.gif" alt="">
+</section>

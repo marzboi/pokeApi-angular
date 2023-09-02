@@ -1,13 +1,7 @@
 <section class="navmenu">
-  <ul class="navmenu-btn">
-    <li><button (click)="handleNextOrPrevious('https://pokeapi.co/api/v2/pokemon?offset=0')"
-        class="return">Reset</button></li>
-    <li><button (click)="handleNextOrPrevious(previous)">Previous</button></li>
-    <li><button (click)="handleNextOrPrevious(next)" class="next">Next</button></li>
-  </ul>
 
-  <div>
-    <label>Display number of pokemon per page
+  <div class="navmenu-dropdown">
+    <label>Pokemons per page
       <select [(ngModel)]="pokemonLimit" (change)="handleLimitChange()">
         <option value="20">20</option>
         <option value="40">40</option>
@@ -16,7 +10,7 @@
     </label>
   </div>
 
-  <div>
+  <div class="navmenu-filter">
     <label>Filter by type
       <select [(ngModel)]="type" (change)="handlePokemonByType()">
         <option value="1">normal</option>
@@ -42,10 +36,17 @@
     </label>
   </div>
 
-  <div>
-    <label>Find by name
-      <input type="text" [(ngModel)]="search" />
-      <button (click)="handlePokemonByName()">Search by Name</button>
+  <div class="navmenu-search">
+    <label>Find by name/ID
+      <input type="text" id='search' [(ngModel)]="search" />
+      <button (click)="handlePokemonByName()" id="search">Go!</button>
     </label>
   </div>
+
+  <ul class="navmenu-btn">
+    <li><button (click)="handleNextOrPrevious('https://pokeapi.co/api/v2/pokemon?offset=0')"
+        class="return">Reset</button></li>
+    <li><button (click)="handleNextOrPrevious(previous)">Previous</button></li>
+    <li><button (click)="handleNextOrPrevious(next)" class="next">Next</button></li>
+  </ul>
 </section>

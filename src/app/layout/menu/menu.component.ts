@@ -64,6 +64,7 @@ export class MenuComponent {
   }
 
   handlePokemonByName() {
+    if (this.search.length === 0) return;
     this.zone.run(() => this.router.navigate(['loading']));
     this.pokemonService
       .getSinglePokemonByName(this.search.toLowerCase())

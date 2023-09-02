@@ -1,9 +1,13 @@
 <div>
   <ul>
-    <li *ngFor="let item of pokemons">
-      <span>#{{item.id}} </span>
-      <span>{{item.name}} </span>
-      <img src={{item.sprites.front_default}} alt={{item.name}} (click)="handleNavigaToDetails(item.id)">
+    <li *ngFor="let item of pokemons" class="card">
+      <div class="card-body">
+        <span>#{{item.id}} </span>
+        <span>{{item.name}} </span>
+      </div>
+
+      <img class="card-img-top" src={{item.sprites.front_default}} alt={{item.name}}
+        (click)="handleNavigaToDetails(item.id)">
     </li>
   </ul>
 </div>

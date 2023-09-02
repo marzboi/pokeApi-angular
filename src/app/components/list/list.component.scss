@@ -8,14 +8,12 @@ ul {
   li {
     margin: 0;
     color: #fff;
-    padding: 1%;
     border: 3px solid #000000;
     flex-basis: calc(100% / 6);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background: url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
-    border-radius: 20%;
     text-align: center;
     @media (max-width: 1080px) {
       flex-basis: calc(100% / 5);
@@ -29,8 +27,12 @@ ul {
       flex-basis: calc(100% / 3);
     }
 
-    // @media (max-width: 400px) {
-    //   flex-basis: 100%;
-    // }
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      span {
+        margin: 0.2rem 0;
+      }
+    }
   }
 }

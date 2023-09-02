@@ -1,5 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { PokemonDetails } from 'src/app/types/api-response';
 
@@ -23,7 +24,10 @@ export class MenuComponent {
   ) {}
 
   ngOnInit(): void {
-    this.pokemonService.getPokemons().subscribe(() => {});
+    this.zone.run(() => this.router.navigate(['loading']));
+    this.pokemonService.getPokemons().subscribe(() => {
+      this.zone.run(() => this.router.navigate(['']));
+    });
     this.pokemonService.next$.subscribe((next) => (this.next = next));
     this.pokemonService.previous$.subscribe(
       (previous) => (this.previous = previous)
@@ -34,26 +38,41 @@ export class MenuComponent {
   }
 
   handleNextOrPrevious(url?: string | null) {
+    this.zone.run(() => this.router.navigate(['loading']));
     !url ? (url = this.pokemonService.url) : url;
     this.pokemonService.getPokemons(url).subscribe(() => {
       this.next = this.pokemonService.next$.value;
       this.previous = this.pokemonService.previous$.value;
+      this.zone.run(() => this.router.navigate(['']));
     });
   }
 
   handleLimitChange() {
+    this.zone.run(() => this.router.navigate(['loading']));
     this.pokemonService
       .getPokemons(this.currentUrl.split('&')[0], this.pokemonLimit)
-      .subscribe();
+      .subscribe(() => {
+        this.zone.run(() => this.router.navigate(['']));
+      });
   }
 
   handlePokemonByType() {
-    this.pokemonService.getPokemonByType(this.type).subscribe();
+    this.zone.run(() => this.router.navigate(['loading']));
+    this.pokemonService.getPokemonByType(this.type).subscribe(() => {
+      this.zone.run(() => this.router.navigate(['']));
+    });
   }
 
   handlePokemonByName() {
+    this.zone.run(() => this.router.navigate(['loading']));
     this.pokemonService
       .getSinglePokemonByName(this.search.toLowerCase())
+      .pipe(
+        catchError(() => {
+          this.zone.run(() => this.router.navigate(['error']));
+          return [];
+        })
+      )
       .subscribe(() => {
         this.pokemon = this.pokemonService.pokemon$.value;
         this.zone.run(() =>

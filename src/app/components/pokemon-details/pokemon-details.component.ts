@@ -11,7 +11,7 @@ import { PokemonDetails } from 'src/app/types/api-response';
 export class PokemonDetailsComponent {
   params: Params = { id: '' };
   pokemon: PokemonDetails | null = null;
-  loading = true;
+  loading: boolean = true;
   constructor(
     private pokemonService: PokemonService,
     private route: ActivatedRoute,

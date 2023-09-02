@@ -12,11 +12,10 @@
   </div>
 
   <div>
-
     <button (click)="handleNavigateHome()">Return to list</button>
   </div>
 </section>
 
 <section *ngIf="loading">
-  <img src="assets/loading.gif" alt="">
+  <app-loading></app-loading>
 </section>

@@ -1,4 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
 html,
 body,
 div,
@@ -87,6 +91,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+/* HTML5 display-role reset for older browsers */
 article,
 aside,
 details,
@@ -124,16 +129,20 @@ table {
 }
 html,
 body,
-app-root {
-  font-family: "Almarai", sans-serif;
+.mat-typography {
   height: 100%;
-}
-
-html,
-body {
-  height: 100%;
-}
-body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: radial-gradient(
+    circle,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(227, 155, 211, 1) 0%,
+    rgba(247, 249, 254, 1) 44%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  font-family: "Press Start 2P";
+}
+button,
+select,
+input {
+  font-family: inherit;
 }

@@ -5,6 +5,7 @@
     <li><button (click)="handleNextOrPrevious(previous)">Previous</button></li>
     <li><button (click)="handleNextOrPrevious(next)" class="next">Next</button></li>
   </ul>
+
   <div>
     <label>Display number of pokemon per page
       <select [(ngModel)]="pokemonLimit" (change)="handleLimitChange()">
@@ -14,6 +15,7 @@
       </select>
     </label>
   </div>
+
   <div>
     <label>Filter by type
       <select [(ngModel)]="type" (change)="handlePokemonByType()">

@@ -132,14 +132,9 @@ body,
 .mat-typography {
   height: 100%;
   margin: 0;
-  background: radial-gradient(
-    circle,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(227, 155, 211, 1) 0%,
-    rgba(247, 249, 254, 1) 44%,
-    rgba(0, 212, 255, 1) 100%
-  );
+  background: url("https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png");
   font-family: "Press Start 2P";
+  color: #fff;
 }
 button,
 select,

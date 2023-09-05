@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { PokemonService } from 'src/app/services/pokemon.service';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss'],
+  selector: 'app-dropdown-menu',
+  templateUrl: './dropdown-menu.component.html',
+  styleUrls: ['./dropdown-menu.component.scss'],
 })
-export class MenuComponent {
+export class DropdownMenuComponent {
   currentUrl: string = '';
   pokemonLimit: number = 20;
   constructor(

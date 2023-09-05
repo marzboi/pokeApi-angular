@@ -5,6 +5,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LayoutComponent } from './layout/layout.component';
 import { MenuComponent } from './menu/menu.component';
 import { FormsModule } from '@angular/forms';
+import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     LayoutComponent,
     MenuComponent,
+    FilterComponent,
   ],
   imports: [CommonModule, FormsModule],
   exports: [LayoutComponent],

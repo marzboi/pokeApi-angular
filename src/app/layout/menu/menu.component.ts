@@ -24,10 +24,6 @@ export class MenuComponent {
   ) {}
 
   ngOnInit(): void {
-    this.zone.run(() => this.router.navigate(['loading']));
-    this.pokemonService.getPokemons().subscribe(() => {
-      this.zone.run(() => this.router.navigate(['']));
-    });
     this.pokemonService.next$.subscribe((next) => (this.next = next));
     this.pokemonService.previous$.subscribe(
       (previous) => (this.previous = previous)

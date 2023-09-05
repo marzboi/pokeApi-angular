@@ -6,6 +6,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { MenuComponent } from './menu/menu.component';
 import { FormsModule } from '@angular/forms';
 import { FilterComponent } from './filter/filter.component';
+import { ButtonsComponent } from './buttons/buttons.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { FilterComponent } from './filter/filter.component';
     LayoutComponent,
     MenuComponent,
     FilterComponent,
+    ButtonsComponent,
   ],
   imports: [CommonModule, FormsModule],
   exports: [LayoutComponent],

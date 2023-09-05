@@ -11,8 +11,6 @@ import { PokemonDetails } from 'src/app/types/api-response';
 })
 export class MenuComponent {
   currentUrl: string = '';
-  next: string | null = null;
-  previous: string | null = null;
   pokemonLimit: number = 20;
   search: string = '';
   pokemon: PokemonDetails | null = null;
@@ -21,26 +19,6 @@ export class MenuComponent {
     private router: Router,
     private zone: NgZone
   ) {}
-
-  ngOnInit(): void {
-    this.pokemonService.next$.subscribe((next) => (this.next = next));
-    this.pokemonService.previous$.subscribe(
-      (previous) => (this.previous = previous)
-    );
-    this.pokemonService.currentUrl$.subscribe(
-      (current) => (this.currentUrl = current)
-    );
-  }
-
-  handleNextOrPrevious(url?: string | null) {
-    this.zone.run(() => this.router.navigate(['loading']));
-    !url ? (url = this.pokemonService.url) : url;
-    this.pokemonService.getPokemons(url).subscribe(() => {
-      this.next = this.pokemonService.next$.value;
-      this.previous = this.pokemonService.previous$.value;
-      this.zone.run(() => this.router.navigate(['']));
-    });
-  }
 
   handleLimitChange() {
     this.zone.run(() => this.router.navigate(['loading']));

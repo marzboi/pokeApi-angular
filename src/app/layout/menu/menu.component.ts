@@ -14,7 +14,6 @@ export class MenuComponent {
   next: string | null = null;
   previous: string | null = null;
   pokemonLimit: number = 20;
-  type: number = 0;
   search: string = '';
   pokemon: PokemonDetails | null = null;
   constructor(
@@ -50,13 +49,6 @@ export class MenuComponent {
       .subscribe(() => {
         this.zone.run(() => this.router.navigate(['']));
       });
-  }
-
-  handlePokemonByType() {
-    this.zone.run(() => this.router.navigate(['loading']));
-    this.pokemonService.getPokemonByType(this.type).subscribe(() => {
-      this.zone.run(() => this.router.navigate(['']));
-    });
   }
 
   handlePokemonByName() {

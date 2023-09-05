@@ -7,6 +7,7 @@ import { MenuComponent } from './menu/menu.component';
 import { FormsModule } from '@angular/forms';
 import { FilterComponent } from './filter/filter.component';
 import { ButtonsComponent } from './buttons/buttons.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ButtonsComponent } from './buttons/buttons.component';
     MenuComponent,
     FilterComponent,
     ButtonsComponent,
+    SearchComponent,
   ],
   imports: [CommonModule, FormsModule],
   exports: [LayoutComponent],

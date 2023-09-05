@@ -1,22 +1,22 @@
 import { Component, NgZone } from '@angular/core';
-import { PokemonService } from './services/pokemon.service';
 import { Router } from '@angular/router';
+import { PokemonService } from 'src/app/services/pokemon.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-filter',
+  templateUrl: './filter.component.html',
+  styleUrls: ['./filter.component.scss'],
 })
-export class AppComponent {
-  title = 'pokeApi';
+export class FilterComponent {
+  type: number = 0;
   constructor(
     private pokemonService: PokemonService,
     private router: Router,
     private zone: NgZone
   ) {}
-  ngOnInit(): void {
+  handlePokemonByType() {
     this.zone.run(() => this.router.navigate(['loading']));
-    this.pokemonService.getPokemons().subscribe(() => {
+    this.pokemonService.getPokemonByType(this.type).subscribe(() => {
       this.zone.run(() => this.router.navigate(['']));
     });
   }

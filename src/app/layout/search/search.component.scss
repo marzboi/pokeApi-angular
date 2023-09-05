@@ -1,0 +1,43 @@
+.navmenu-search {
+  display: flex;
+  margin: 1rem;
+
+  label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+
+  input {
+    width: 25%;
+    margin: 0 1rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    color: #fff;
+    background: #000;
+    transition: all 0.3s ease;
+    &:focus {
+      outline: none;
+      background: #fff;
+      color: #000;
+    }
+  }
+
+  button {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #fff;
+    background: #000;
+    transition: all 0.3s ease;
+    &:hover {
+      background: #fff;
+      color: #000;
+    }
+  }
+}

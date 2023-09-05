@@ -1,6 +1,14 @@
 <app-header></app-header>
-<app-menu></app-menu>
+<section class="navmenu">
+  <app-dropdown-menu></app-dropdown-menu>
+  <app-filter></app-filter>
+  <app-search></app-search>
+  <app-buttons></app-buttons>
+</section>
 <main>
   <ng-content></ng-content>
 </main>
+<section class="navmenu">
+  <app-buttons></app-buttons>
+</section>
 <app-footer></app-footer>

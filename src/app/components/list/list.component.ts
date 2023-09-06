@@ -11,6 +11,7 @@ import { PokemonDetails } from 'src/app/types/api-response';
 export class ListComponent {
   pokemons: PokemonDetails[] = [];
   next: string | null = null;
+  isLoading: boolean = false;
   constructor(
     private pokemonService: PokemonService,
     private router: Router,
@@ -31,7 +32,16 @@ export class ListComponent {
   }
 
   onScroll() {
-    if (!this.next) return;
-    this.pokemonService.getPokemons(this.next).subscribe((answer) => {});
+    if (!this.next || this.isLoading) return;
+    this.isLoading = true;
+    this.pokemonService.getPokemons(this.next).subscribe(
+      () => {
+        this.isLoading = false;
+      },
+      (error) => {
+        console.error('Error fetching Pokémon:', error);
+        this.isLoading = false;
+      }
+    );
   }
 }

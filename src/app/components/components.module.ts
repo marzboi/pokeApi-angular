@@ -5,9 +5,15 @@ import { ListComponent } from './list/list.component';
 import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.component';
 import { LoadingComponent } from './loading/loading.component';
 import { ErrorComponent } from './error/error.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
-  declarations: [ListComponent, PokemonDetailsComponent, LoadingComponent, ErrorComponent],
-  imports: [CommonModule, RouterModule],
+  declarations: [
+    ListComponent,
+    PokemonDetailsComponent,
+    LoadingComponent,
+    ErrorComponent,
+  ],
+  imports: [CommonModule, RouterModule, InfiniteScrollModule],
 })
 export class ComponentsModule {}

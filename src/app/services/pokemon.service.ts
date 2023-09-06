@@ -1,43 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Pokemon } from '../types/api-response';
 import {
   ApiResponse,
   ApiResponseType,
   PokemonDetails,
 } from '../types/api-response';
-import {
-  BehaviorSubject,
-  Observable,
-  forkJoin,
-  map,
-  mergeMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, forkJoin, map, mergeMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PokemonService {
   public url: string = 'https://pokeapi.co/api/v2/';
-  currentUrl$: BehaviorSubject<string>;
   next$: BehaviorSubject<string | null>;
-  previous$: BehaviorSubject<string | null>;
-  allPokemon$: BehaviorSubject<PokemonDetails[] | null>;
+  pokemonsList$: BehaviorSubject<PokemonDetails[]>;
   pokemon$: BehaviorSubject<PokemonDetails | null>;
-
+  private fetchPokemons: PokemonDetails[] = [];
   constructor(private http: HttpClient) {
-    this.currentUrl$ = new BehaviorSubject<string>(this.url);
     this.next$ = new BehaviorSubject<string | null>(null);
-    this.previous$ = new BehaviorSubject<string | null>(null);
-    this.allPokemon$ = new BehaviorSubject<PokemonDetails[] | null>(null);
+    this.pokemonsList$ = new BehaviorSubject<PokemonDetails[]>([]);
     this.pokemon$ = new BehaviorSubject<PokemonDetails | null>(null);
   }
 
-  getPokemons(url?: string, limit?: number) {
+  getPokemons(url?: string) {
     url ? (url = url) : (url = this.url + 'pokemon?offset=0');
-    limit ? (url = url.split('&')[0] + '&limit=' + limit) : url;
-    this.currentUrl$.next(url);
     return this.http.get<ApiResponse>(url).pipe(
       mergeMap((apiResponse) => {
         const detailObservables = apiResponse.results.map((pokemon) => {
@@ -47,24 +33,16 @@ export class PokemonService {
         return forkJoin(detailObservables).pipe(
           map((details) => {
             this.next$.next(apiResponse.next);
-            this.previous$.next(apiResponse.previous);
-            this.allPokemon$.next(details);
+            this.fetchPokemons = [...this.fetchPokemons, ...details];
+            this.pokemonsList$.next(this.fetchPokemons);
           })
         );
       })
     );
   }
 
-  getSinglePokemonById(id: number) {
+  getSinglePokemonById(id: number | string) {
     return this.http.get<PokemonDetails>(this.url + 'pokemon/' + id).pipe(
-      map((answer) => {
-        this.pokemon$.next(answer);
-      })
-    );
-  }
-
-  getSinglePokemonByName(name: string) {
-    return this.http.get<PokemonDetails>(this.url + 'pokemon/' + name).pipe(
       map((answer) => {
         this.pokemon$.next(answer);
       })
@@ -81,8 +59,25 @@ export class PokemonService {
         return forkJoin(detailObservables).pipe(
           map((details) => {
             this.next$.next(null);
-            this.previous$.next(null);
-            this.allPokemon$.next(details);
+            this.pokemonsList$.next(details);
+          })
+        );
+      })
+    );
+  }
+
+  resetPokemonList() {
+    return this.http.get<ApiResponse>('https://pokeapi.co/api/v2/pokemon').pipe(
+      mergeMap((apiResponse) => {
+        const detailObservables = apiResponse.results.map((pokemon) => {
+          return this.http.get<PokemonDetails>(pokemon.url);
+        });
+
+        return forkJoin(detailObservables).pipe(
+          map((details) => {
+            this.next$.next(apiResponse.next);
+            this.fetchPokemons = details;
+            this.pokemonsList$.next(this.fetchPokemons);
           })
         );
       })

@@ -1,7 +1,10 @@
 .navmenu {
   font-size: 0.8rem;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 780px) {
+    flex-direction: column;
+  }
 }

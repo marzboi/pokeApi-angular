@@ -9,7 +9,9 @@ import { PokemonDetails } from 'src/app/types/api-response';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent {
-  pokemons: PokemonDetails[] | null = null;
+  pokemons: PokemonDetails[] = [];
+  next: string | null = null;
+  isLoading: boolean = false;
   constructor(
     private pokemonService: PokemonService,
     private router: Router,
@@ -17,12 +19,31 @@ export class ListComponent {
   ) {}
 
   ngOnInit(): void {
-    this.pokemonService.allPokemon$.subscribe((pokemons) => {
+    this.pokemonService.next$.subscribe((nextUrl) => {
+      this.next = nextUrl;
+    });
+    this.pokemonService.pokemonsList$.subscribe((pokemons) => {
       this.pokemons = pokemons;
     });
   }
 
   handleNavigaToDetails(id: number) {
     this.zone.run(() => this.router.navigate([`pokemon/${id}`]));
+  }
+
+  onScroll() {
+    if (!this.next || this.isLoading) return;
+    this.isLoading = true;
+    console.log('starting to load');
+    this.pokemonService.getPokemons(this.next).subscribe(
+      () => {
+        console.log('Pokémon fetched successfully');
+        this.isLoading = false;
+      },
+      (error) => {
+        console.error('Error fetching Pokémon:', error);
+        this.isLoading = false;
+      }
+    );
   }
 }

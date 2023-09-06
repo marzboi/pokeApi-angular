@@ -1,19 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Pokemon } from '../types/api-response';
 import {
   ApiResponse,
   ApiResponseType,
   PokemonDetails,
 } from '../types/api-response';
-import {
-  BehaviorSubject,
-  Observable,
-  forkJoin,
-  map,
-  mergeMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, forkJoin, map, mergeMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -55,16 +47,8 @@ export class PokemonService {
     );
   }
 
-  getSinglePokemonById(id: number) {
+  getSinglePokemonById(id: number | string) {
     return this.http.get<PokemonDetails>(this.url + 'pokemon/' + id).pipe(
-      map((answer) => {
-        this.pokemon$.next(answer);
-      })
-    );
-  }
-
-  getSinglePokemonByName(name: string) {
-    return this.http.get<PokemonDetails>(this.url + 'pokemon/' + name).pipe(
       map((answer) => {
         this.pokemon$.next(answer);
       })

@@ -25,4 +25,8 @@ export class ListComponent {
   handleNavigaToDetails(id: number) {
     this.zone.run(() => this.router.navigate([`pokemon/${id}`]));
   }
+
+  onScroll() {
+    console.log('QUAN');
+  }
 }

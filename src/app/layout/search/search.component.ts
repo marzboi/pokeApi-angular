@@ -17,11 +17,11 @@ export class SearchComponent {
     private router: Router,
     private zone: NgZone
   ) {}
-  handlePokemonByName() {
+  handlePokemonById() {
     if (this.search.includes(' ')) return;
     this.zone.run(() => this.router.navigate(['loading']));
     this.pokemonService
-      .getSinglePokemonByName(this.search.toLowerCase())
+      .getSinglePokemonById(this.search.toLowerCase())
       .pipe(
         catchError(() => {
           this.zone.run(() => this.router.navigate(['error']));

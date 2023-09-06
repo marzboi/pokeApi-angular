@@ -12,6 +12,7 @@ export class PokemonDetailsComponent {
   params: Params = { id: '' };
   pokemon: PokemonDetails | null = null;
   loading: boolean = true;
+  id: number = 0;
   constructor(
     private pokemonService: PokemonService,
     private route: ActivatedRoute,
@@ -21,9 +22,30 @@ export class PokemonDetailsComponent {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.pokemonService.getSinglePokemonById(params['id']).subscribe(() => {
+        this.id = Number(params['id']);
         this.pokemon = this.pokemonService.pokemon$.value;
         this.loading = false;
       });
+    });
+  }
+
+  loadPrevious() {
+    this.loading = true;
+    this.pokemonService.getSinglePokemonById(this.id - 1).subscribe(() => {
+      this.pokemon = this.pokemonService.pokemon$.value;
+      this.loading = false;
+      this.id--;
+      console.log(this.id);
+    });
+  }
+
+  loadNext() {
+    this.loading = true;
+    this.pokemonService.getSinglePokemonById(this.id + 1).subscribe(() => {
+      this.pokemon = this.pokemonService.pokemon$.value;
+      this.loading = false;
+      this.id++;
+      console.log(this.id);
     });
   }
 

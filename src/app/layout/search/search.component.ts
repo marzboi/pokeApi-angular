@@ -18,7 +18,7 @@ export class SearchComponent {
     private zone: NgZone
   ) {}
   handlePokemonById() {
-    if (this.search.includes(' ')) return;
+    if (this.search.includes(' ') || !this.search) return;
     this.zone.run(() => this.router.navigate(['loading']));
     this.pokemonService
       .getSinglePokemonById(this.search.toLowerCase())

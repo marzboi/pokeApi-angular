@@ -9,7 +9,8 @@ import { PokemonDetails } from 'src/app/types/api-response';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent {
-  pokemons: PokemonDetails[] | null = null;
+  pokemons: PokemonDetails[] = [];
+  next: string | null = null;
   constructor(
     private pokemonService: PokemonService,
     private router: Router,
@@ -17,7 +18,10 @@ export class ListComponent {
   ) {}
 
   ngOnInit(): void {
-    this.pokemonService.allPokemon$.subscribe((pokemons) => {
+    this.pokemonService.next$.subscribe((nextUrl) => {
+      this.next = nextUrl;
+    });
+    this.pokemonService.pokemonsList$.subscribe((pokemons) => {
       this.pokemons = pokemons;
     });
   }
@@ -27,6 +31,7 @@ export class ListComponent {
   }
 
   onScroll() {
-    console.log('QUAN');
+    if (!this.next) return;
+    this.pokemonService.getPokemons(this.next).subscribe((answer) => {});
   }
 }

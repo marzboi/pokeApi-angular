@@ -16,8 +16,14 @@ export class FilterComponent {
   ) {}
   handlePokemonByType() {
     this.zone.run(() => this.router.navigate(['loading']));
-    this.pokemonService.getPokemonByType(this.type).subscribe(() => {
-      this.zone.run(() => this.router.navigate(['']));
-    });
+    if (!this.type) {
+      this.pokemonService.resetPokemonList().subscribe(() => {
+        this.zone.run(() => this.router.navigate(['']));
+      });
+    } else {
+      this.pokemonService.getPokemonByType(this.type).subscribe(() => {
+        this.zone.run(() => this.router.navigate(['']));
+      });
+    }
   }
 }

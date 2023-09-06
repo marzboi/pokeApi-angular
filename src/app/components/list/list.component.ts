@@ -34,8 +34,10 @@ export class ListComponent {
   onScroll() {
     if (!this.next || this.isLoading) return;
     this.isLoading = true;
+    console.log('starting to load');
     this.pokemonService.getPokemons(this.next).subscribe(
       () => {
+        console.log('Pokémon fetched successfully');
         this.isLoading = false;
       },
       (error) => {

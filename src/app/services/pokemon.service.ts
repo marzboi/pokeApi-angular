@@ -65,4 +65,22 @@ export class PokemonService {
       })
     );
   }
+
+  resetPokemonList() {
+    return this.http.get<ApiResponse>('https://pokeapi.co/api/v2/pokemon').pipe(
+      mergeMap((apiResponse) => {
+        const detailObservables = apiResponse.results.map((pokemon) => {
+          return this.http.get<PokemonDetails>(pokemon.url);
+        });
+
+        return forkJoin(detailObservables).pipe(
+          map((details) => {
+            this.next$.next(apiResponse.next);
+            this.fetchPokemons = details;
+            this.pokemonsList$.next(this.fetchPokemons);
+          })
+        );
+      })
+    );
+  }
 }

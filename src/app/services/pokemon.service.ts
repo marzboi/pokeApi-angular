@@ -23,7 +23,7 @@ export class PokemonService {
   }
 
   getPokemons(url?: string) {
-    url ? (url = url) : (url = this.url + 'pokemon?offset=0');
+    url ? (url = url) : (url = this.url + 'pokemon?limit=40&offset=0');
     return this.http.get<ApiResponse>(url).pipe(
       mergeMap((apiResponse) => {
         const detailObservables = apiResponse.results.map((pokemon) => {

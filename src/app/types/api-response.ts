@@ -15,12 +15,39 @@ export type Pokemon = {
 };
 
 export type PokemonDetails = {
-  name: string;
   id: number;
-  height: number;
+  name: string;
   weight: number;
+  height: number;
+  stats: Stat[];
+  types: Type[] | undefined[];
   sprites: {
-    back_default: string | null;
-    front_default: string | null;
+    front_default?: string;
+    versions: {
+      'generation-v': {
+        'black-white': {
+          animated: {
+            front_default?: string;
+          };
+        };
+      };
+    };
   };
 };
+
+export interface Stat {
+  base_stat: number;
+  effort: number;
+  stat: {
+    name: string;
+    url: string;
+  };
+}
+
+export interface Type {
+  slot: number;
+  type: {
+    name: string;
+    url: string;
+  };
+}

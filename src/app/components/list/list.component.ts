@@ -12,6 +12,8 @@ export class ListComponent {
   pokemons: PokemonDetails[] = [];
   next: string | null = null;
   isLoading: boolean = false;
+  currentSpriteUrls: { [key: number]: string } = {};
+
   constructor(
     private pokemonService: PokemonService,
     private router: Router,
@@ -24,6 +26,9 @@ export class ListComponent {
     });
     this.pokemonService.pokemonsList$.subscribe((pokemons) => {
       this.pokemons = pokemons;
+      this.pokemons.forEach((pokemon) => {
+        this.currentSpriteUrls[pokemon.id] = this.getStaticSpriteUrl(pokemon);
+      });
     });
   }
 
@@ -44,6 +49,17 @@ export class ListComponent {
         console.error('Error fetching Pokémon:', error);
         this.isLoading = false;
       }
+    );
+  }
+
+  getStaticSpriteUrl(item: PokemonDetails): string {
+    return item.sprites.front_default || 'path/to/default/image.png';
+  }
+
+  getGifSpriteUrl(item: PokemonDetails): string {
+    return (
+      item.sprites.versions?.['generation-v']?.['black-white']?.animated
+        ?.front_default || this.getStaticSpriteUrl(item)
     );
   }
 }

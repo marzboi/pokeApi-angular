@@ -5,9 +5,12 @@
         <span>#{{item.id}} </span>
         <span>{{item.name.slice(0, 1).toUpperCase() + item.name.slice(1)}} </span>
       </div>
+      <div>
+        <img class="card-img-top" [src]="currentSpriteUrls[item.id]" alt="{{item.name}}"
+          (click)="handleNavigaToDetails(item.id)" (mouseover)="currentSpriteUrls[item.id] = getGifSpriteUrl(item)"
+          (mouseout)="currentSpriteUrls[item.id] = getStaticSpriteUrl(item)">
 
-      <img class="card-img-top" src={{item.sprites.front_default}} alt={{item.name}}
-        (click)="handleNavigaToDetails(item.id)">
+      </div>
     </li>
   </ul>
 </div>

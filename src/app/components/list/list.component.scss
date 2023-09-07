@@ -44,3 +44,37 @@ ul {
     }
   }
 }
+
+.jump {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+
+  input {
+    width: 5%;
+    margin: 0 0.6rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    color: #fff;
+    background: #000;
+    transition: all 0.3s ease;
+  }
+
+  button {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #fff;
+    background: #000;
+    transition: all 0.3s ease;
+    &:hover {
+      background: #fff;
+      color: #000;
+    }
+  }
+}

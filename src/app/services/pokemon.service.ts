@@ -95,7 +95,9 @@ export class PokemonService {
 
           return forkJoin(detailObservables).pipe(
             map((details) => {
-              this.next$.next(apiResponse.next.split('?')[0] + '?limit=40');
+              this.next$.next(
+                apiResponse.next.split('?')[0] + `?offset=${id}&limit=40`
+              );
               console.log(this.next$.value);
               this.fetchPokemons = [...details];
               this.pokemonsList$.next(this.fetchPokemons);

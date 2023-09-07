@@ -1,6 +1,6 @@
 <div class="jump">
-  <label for="jumpToId">Jump to Pokémon ID: </label>
-  <input type="number" id="jumpToId" [(ngModel)]="jumpToId">
+  <label for="jumpToId">Jump to Pokémon Index: </label>
+  <input type="number" id="jumpToId" [(ngModel)]="jumpToId" (keyup.enter)="jumpToPokemon()">
   <button (click)="jumpToPokemon()">Jump</button>
 </div>
 

@@ -5,20 +5,4 @@ footer {
   justify-content: center;
   flex-direction: column;
   background-color: black;
-
-  button {
-    margin: 0.8rem;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-size: 0.6rem;
-    font-family: inherit;
-    color: #fff;
-    background: #000;
-    transition: all 0.3s ease;
-    &:hover {
-      background: #fff;
-      color: #000;
-    }
-  }
 }

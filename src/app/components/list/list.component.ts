@@ -2,6 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { PokemonDetails } from 'src/app/types/api-response';
+import { faHandPointUp } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-list',
@@ -14,6 +15,7 @@ export class ListComponent {
   isLoading: boolean = false;
   currentSpriteUrls: { [key: number]: string } = {};
   jumpToId: number | null = null;
+  public faHand = faHandPointUp;
 
   constructor(
     private pokemonService: PokemonService,
@@ -93,5 +95,9 @@ export class ListComponent {
       );
       pokemonElement?.scrollIntoView({ behavior: 'smooth' });
     }, 0);
+  }
+
+  goBackUp() {
+    window.scrollTo(0, 0);
   }
 }

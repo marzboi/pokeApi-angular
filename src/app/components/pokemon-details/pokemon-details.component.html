@@ -2,28 +2,29 @@
 
   <div class="details">
     <div class="button-container">
-      <button *ngIf="id >= 2" (click)="loadPrevious()">Temporal Previous</button>
+      <mat-icon fontIcon="arrow_back" (click)="loadPrevious()" *ngIf="id >= 2"></mat-icon>
     </div>
 
-    <div class="card" style="width: 20rem;">
+    <div class="card" style="width: 18rem;">
       <img class="card-img-top" src={{pokemon.sprites.front_default}} alt={{pokemon.name}}>
       <div class="card-body">
         <h1 class="card-title">{{pokemon.name.slice(0, 1).toUpperCase() + pokemon.name.slice(1)}}</h1>
         <p class="card-text">
-          <span>Index: {{pokemon.id}}</span>
-          <span>Height: {{pokemon.height}}</span>
-          <span>Weight: {{pokemon.weight}}</span>
+          <span>Index: #{{pokemon.id}}</span>
+          <span>Height: {{pokemon.height}} cm</span>
+          <span>Weight: {{pokemon.weight}} Kg</span>
         </p>
       </div>
     </div>
 
     <div class="button-container">
-      <button *ngIf="id <= 10270" (click)="loadNext()">Temporal Next</button>
+      <mat-icon fontIcon="arrow_forward" (click)="loadNext()" *ngIf="id <= 10270"></mat-icon>
     </div>
   </div>
 
   <div>
-    <button (click)="handleNavigateHome()">Return to list</button>
+    <mat-icon class='return' (click)="handleNavigateHome()">arrow_back</mat-icon>
+    <mat-icon class='return' (click)="handleNavigateHome()">apps</mat-icon>
   </div>
 </section>
 

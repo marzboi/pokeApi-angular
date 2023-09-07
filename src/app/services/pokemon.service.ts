@@ -83,4 +83,25 @@ export class PokemonService {
       })
     );
   }
+
+  jumpToPokemon(id: number) {
+    return this.http
+      .get<ApiResponse>(this.url + `pokemon?limit=${id + 41}`)
+      .pipe(
+        mergeMap((apiResponse) => {
+          const detailObservables = apiResponse.results.map((pokemon) => {
+            return this.http.get<PokemonDetails>(pokemon.url);
+          });
+
+          return forkJoin(detailObservables).pipe(
+            map((details) => {
+              this.next$.next(apiResponse.next.split('?')[0] + '?limit=40');
+              console.log(this.next$.value);
+              this.fetchPokemons = [...details];
+              this.pokemonsList$.next(this.fetchPokemons);
+            })
+          );
+        })
+      );
+  }
 }

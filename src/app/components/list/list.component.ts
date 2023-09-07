@@ -13,6 +13,7 @@ export class ListComponent {
   next: string | null = null;
   isLoading: boolean = false;
   currentSpriteUrls: { [key: number]: string } = {};
+  jumpToId: number | null = null;
 
   constructor(
     private pokemonService: PokemonService,
@@ -61,5 +62,30 @@ export class ListComponent {
       item.sprites.versions?.['generation-v']?.['black-white']?.animated
         ?.front_default || this.getStaticSpriteUrl(item)
     );
+  }
+
+  jumpToPokemon() {
+    if (this.jumpToId !== null) {
+      this.pokemonService.jumpToPokemon(this.jumpToId).subscribe(
+        () => {
+          const index = this.pokemons.findIndex(
+            (pokemon) => pokemon.id === this.jumpToId
+          );
+          this.scrollToPokemon(index);
+        },
+        (error) => {
+          console.error('Error fetching Pokémon:', error);
+        }
+      );
+    }
+  }
+
+  scrollToPokemon(index: number) {
+    setTimeout(() => {
+      const pokemonElement = document.getElementById(
+        'pokemon-' + this.pokemons[index].id
+      );
+      pokemonElement?.scrollIntoView({ behavior: 'smooth' });
+    }, 0);
   }
 }

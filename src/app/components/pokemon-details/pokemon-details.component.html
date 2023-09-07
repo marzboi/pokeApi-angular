@@ -1,7 +1,7 @@
 <section *ngIf="!loading && pokemon">
 
   <div class="details">
-    <div>
+    <div *ngIf="id >= 2">
       <button (click)="loadPrevious()">Temporal Previous</button>
     </div>
 
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div>
+    <div *ngIf="id <= 10270">
       <button (click)="loadNext()">Temporal Next</button>
     </div>
   </div>

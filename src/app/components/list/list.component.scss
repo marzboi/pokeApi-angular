@@ -9,12 +9,13 @@ ul {
     margin: 0;
     color: #fff;
     border: 3px solid #000000;
-    flex-basis: calc(100% / 6);
+    flex-basis: calc(100% / 7);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background: url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
     text-align: center;
+
     @media (max-width: 1080px) {
       flex-basis: calc(100% / 5);
     }
@@ -25,6 +26,7 @@ ul {
 
     @media (max-width: 600px) {
       flex-basis: calc(100% / 3);
+      font-size: 0.6rem;
     }
 
     .card-body {
@@ -34,5 +36,72 @@ ul {
         margin: 0.2rem 0;
       }
     }
+
+    .card-img-top {
+      max-width: 150px;
+      max-height: 150px;
+      object-fit: contain;
+      transition: ease-in 1s;
+    }
   }
+}
+
+.jump {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+
+  input {
+    width: 5%;
+    margin: 0 0.6rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    color: #fff;
+    background: #000;
+    transition: all 0.3s ease;
+  }
+
+  button {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #fff;
+    background: #000;
+    transition: all 0.3s ease;
+    &:hover {
+      background: #fff;
+      color: #000;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(-7px);
+  }
+}
+
+fa-icon {
+  position: fixed;
+  bottom: 4rem;
+  right: 1.3rem;
+  font-size: 2rem;
+  cursor: pointer;
+  scale: 1.5;
+  animation: bounce 2s infinite;
 }

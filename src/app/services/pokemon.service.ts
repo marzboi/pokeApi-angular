@@ -23,7 +23,7 @@ export class PokemonService {
   }
 
   getPokemons(url?: string) {
-    url ? (url = url) : (url = this.url + 'pokemon?offset=0');
+    url ? (url = url) : (url = this.url + 'pokemon?limit=40&offset=0');
     return this.http.get<ApiResponse>(url).pipe(
       mergeMap((apiResponse) => {
         const detailObservables = apiResponse.results.map((pokemon) => {
@@ -82,5 +82,28 @@ export class PokemonService {
         );
       })
     );
+  }
+
+  jumpToPokemon(id: number) {
+    return this.http
+      .get<ApiResponse>(this.url + `pokemon?limit=${id + 41}`)
+      .pipe(
+        mergeMap((apiResponse) => {
+          const detailObservables = apiResponse.results.map((pokemon) => {
+            return this.http.get<PokemonDetails>(pokemon.url);
+          });
+
+          return forkJoin(detailObservables).pipe(
+            map((details) => {
+              this.next$.next(
+                apiResponse.next.split('?')[0] + `?offset=${id}&limit=40`
+              );
+              console.log(this.next$.value);
+              this.fetchPokemons = [...details];
+              this.pokemonsList$.next(this.fetchPokemons);
+            })
+          );
+        })
+      );
   }
 }

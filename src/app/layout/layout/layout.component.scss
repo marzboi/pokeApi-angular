@@ -8,3 +8,17 @@
     flex-direction: column;
   }
 }
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+app-footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}

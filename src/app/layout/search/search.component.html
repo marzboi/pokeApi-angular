@@ -1,6 +1,7 @@
 <div class="navmenu-search">
-  <label>Find by name/ID
-    <input type="text" id='search' [(ngModel)]="search" />
-    <button (click)="handlePokemonById()" id="search">Go!</button>
-  </label>
+  <form [formGroup]="form" (ngSubmit)="handlePokemonById()">
+    <label for="search">Search by name / index</label>
+    <input type="text" id='search' formControlName="search" />
+    <button>Go!</button>
+  </form>
 </div>

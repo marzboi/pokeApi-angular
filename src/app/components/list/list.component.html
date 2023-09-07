@@ -1,13 +1,26 @@
+<div class="jump">
+  <label for="jumpToId">Jump to Index </label>
+  <input type="number" id="jumpToId" [(ngModel)]="jumpToId" (keyup.enter)="jumpToPokemon()" min="1" max="1010">
+  <button (click)="jumpToPokemon()">Jump</button>
+</div>
+
+
 <div infiniteScroll [infiniteScrollDistance]="2" (scrolled)="onScroll()">
   <ul>
-    <li *ngFor="let item of pokemons" class="card">
+    <li *ngFor="let item of pokemons; let i = index" class="card" [id]="'pokemon-' + item.id">
       <div class="card-body">
         <span>#{{item.id}} </span>
         <span>{{item.name.slice(0, 1).toUpperCase() + item.name.slice(1)}} </span>
       </div>
-
-      <img class="card-img-top" src={{item.sprites.front_default}} alt={{item.name}}
-        (click)="handleNavigaToDetails(item.id)">
+      <div>
+        <img class="card-img-top" [src]="currentSpriteUrls[item.id]" alt="{{item.name}}" width="150" height="150"
+          (click)="handleNavigaToDetails(item.id)" (mouseover)="currentSpriteUrls[item.id] = getGifSpriteUrl(item)"
+          (mouseout)="currentSpriteUrls[item.id] = getStaticSpriteUrl(item)">
+      </div>
     </li>
   </ul>
+</div>
+
+<div>
+  <fa-icon [icon]="faHand" (click)="goBackUp()"></fa-icon>
 </div>

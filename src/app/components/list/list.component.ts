@@ -15,6 +15,7 @@ export class ListComponent {
   isLoading: boolean = false;
   currentSpriteUrls: { [key: number]: string } = {};
   jumpToId: number | null = null;
+  hoveringOverImage: { [key: number]: boolean } = {};
   public faHand = faHandPointUp;
 
   constructor(
@@ -99,5 +100,9 @@ export class ListComponent {
 
   goBackUp() {
     window.scrollTo(0, 0);
+  }
+
+  setHoverState(id: number, isHovering: boolean) {
+    this.hoveringOverImage[id] = isHovering;
   }
 }

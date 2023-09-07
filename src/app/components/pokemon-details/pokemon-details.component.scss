@@ -4,22 +4,32 @@ section {
   flex-direction: column;
   align-items: center;
   height: 100%;
+}
 
-  .details {
-    display: flex;
-    .card {
-      background: url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
-      h1 {
-        font-family: "Press Start 2P";
-      }
-      margin: 3rem;
-      background-color: #fff;
-      border: 3px black solid;
+.details {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+  align-items: center;
+}
 
-      .card-text {
-        display: flex;
-        flex-direction: column;
-      }
-    }
-  }
+.card {
+  background: url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
+  margin: 3rem;
+  background-color: #fff;
+  border: 3px black solid;
+}
+
+.card h1 {
+  font-family: "Press Start 2P";
+}
+
+.card .card-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
 }

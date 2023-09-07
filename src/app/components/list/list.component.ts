@@ -66,6 +66,12 @@ export class ListComponent {
 
   jumpToPokemon() {
     if (this.jumpToId !== null) {
+      this.jumpToId < 1
+        ? (this.jumpToId = 1)
+        : this.jumpToId > 1010
+        ? (this.jumpToId = 1010)
+        : this.jumpToId;
+
       this.pokemonService.jumpToPokemon(this.jumpToId).subscribe(
         () => {
           const index = this.pokemons.findIndex(

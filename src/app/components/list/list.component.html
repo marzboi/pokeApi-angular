@@ -1,6 +1,6 @@
 <div class="jump">
-  <label for="jumpToId">Jump to Pokémon Index: </label>
-  <input type="number" id="jumpToId" [(ngModel)]="jumpToId" (keyup.enter)="jumpToPokemon()">
+  <label for="jumpToId">Jump to Index </label>
+  <input type="number" id="jumpToId" [(ngModel)]="jumpToId" (keyup.enter)="jumpToPokemon()" min="1" max="1010">
   <button (click)="jumpToPokemon()">Jump</button>
 </div>
 
@@ -16,7 +16,6 @@
         <img class="card-img-top" [src]="currentSpriteUrls[item.id]" alt="{{item.name}}" width="150" height="150"
           (click)="handleNavigaToDetails(item.id)" (mouseover)="currentSpriteUrls[item.id] = getGifSpriteUrl(item)"
           (mouseout)="currentSpriteUrls[item.id] = getStaticSpriteUrl(item)">
-
       </div>
     </li>
   </ul>

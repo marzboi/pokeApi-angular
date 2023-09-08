@@ -13,6 +13,7 @@ export class PokemonDetailsComponent {
   pokemon: PokemonDetails | null = null;
   loading: boolean = true;
   id: number = 0;
+  pokemons: PokemonDetails[] = [];
   constructor(
     private pokemonService: PokemonService,
     private route: ActivatedRoute,
@@ -26,6 +27,9 @@ export class PokemonDetailsComponent {
         this.pokemon = this.pokemonService.pokemon$.value;
         this.loading = false;
       });
+    });
+    this.pokemonService.pokemonsList$.subscribe((pokemons) => {
+      this.pokemons = pokemons;
     });
   }
 
@@ -50,6 +54,23 @@ export class PokemonDetailsComponent {
   }
 
   handleNavigateHome() {
-    this.zone.run(() => this.router.navigate(['']));
+    this.zone
+      .run(() => this.router.navigate(['']))
+      .then(() => {
+        const index = this.pokemons.findIndex(
+          (pokemon) => pokemon.id === this.id
+        );
+        this.scrollToPokemon(index);
+      })
+      .catch(() => {});
+  }
+
+  scrollToPokemon(index: number) {
+    setTimeout(() => {
+      const pokemonElement = document.getElementById(
+        'pokemon-' + this.pokemons[index].id
+      );
+      pokemonElement?.scrollIntoView({ behavior: 'instant' });
+    }, 0);
   }
 }

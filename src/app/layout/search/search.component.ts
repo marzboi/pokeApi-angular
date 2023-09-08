@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { catchError } from 'rxjs';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { PokemonDetails } from 'src/app/types/api-response';
+import { faHandPointRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search',
@@ -11,6 +12,7 @@ import { PokemonDetails } from 'src/app/types/api-response';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
+  faPoint = faHandPointRight;
   form: FormGroup;
   pokemon: PokemonDetails | null = null;
   constructor(
@@ -24,6 +26,7 @@ export class SearchComponent {
     });
   }
   handlePokemonById() {
+    if (!this.form.value.search || this.form.value.search.includes(' ')) return;
     this.zone.run(() => this.router.navigate(['loading']));
     this.pokemonService
       .getSinglePokemonById(this.form.value.search)

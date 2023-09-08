@@ -86,7 +86,7 @@ export class PokemonService {
 
   jumpToPokemon(id: number) {
     return this.http
-      .get<ApiResponse>(this.url + `pokemon?limit=${id + 41}`)
+      .get<ApiResponse>(this.url + `pokemon?limit=40&offset=${id - 1}`)
       .pipe(
         mergeMap((apiResponse) => {
           const detailObservables = apiResponse.results.map((pokemon) => {
@@ -95,9 +95,7 @@ export class PokemonService {
 
           return forkJoin(detailObservables).pipe(
             map((details) => {
-              this.next$.next(
-                apiResponse.next.split('?')[0] + `?offset=${id}&limit=40`
-              );
+              this.next$.next(apiResponse.next);
               console.log(this.next$.value);
               this.fetchPokemons = [...details];
               this.pokemonsList$.next(this.fetchPokemons);

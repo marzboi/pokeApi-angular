@@ -15,6 +15,7 @@ export class ListComponent {
   isLoading: boolean = false;
   currentSpriteUrls: { [key: number]: string } = {};
   jumpToId: number | null = null;
+  hoveringOverImage: { [key: number]: boolean } = {};
   public faHand = faHandPointUp;
 
   constructor(
@@ -67,6 +68,7 @@ export class ListComponent {
   }
 
   jumpToPokemon() {
+    this.zone.run(() => this.router.navigate([`loading`]));
     if (this.jumpToId !== null) {
       this.jumpToId < 1
         ? (this.jumpToId = 1)
@@ -76,28 +78,21 @@ export class ListComponent {
 
       this.pokemonService.jumpToPokemon(this.jumpToId).subscribe(
         () => {
-          const index = this.pokemons.findIndex(
-            (pokemon) => pokemon.id === this.jumpToId
-          );
-          this.scrollToPokemon(index);
+          this.zone.run(() => this.router.navigate([``]));
         },
         (error) => {
           console.error('Error fetching Pokémon:', error);
+          this.zone.run(() => this.router.navigate([``]));
         }
       );
     }
   }
 
-  scrollToPokemon(index: number) {
-    setTimeout(() => {
-      const pokemonElement = document.getElementById(
-        'pokemon-' + this.pokemons[index].id
-      );
-      pokemonElement?.scrollIntoView({ behavior: 'smooth' });
-    }, 0);
-  }
-
   goBackUp() {
     window.scrollTo(0, 0);
+  }
+
+  setHoverState(id: number, isHovering: boolean) {
+    this.hoveringOverImage[id] = isHovering;
   }
 }

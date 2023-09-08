@@ -68,6 +68,7 @@ export class ListComponent {
   }
 
   jumpToPokemon() {
+    this.zone.run(() => this.router.navigate([`loading`]));
     if (this.jumpToId !== null) {
       this.jumpToId < 1
         ? (this.jumpToId = 1)
@@ -76,9 +77,12 @@ export class ListComponent {
         : this.jumpToId;
 
       this.pokemonService.jumpToPokemon(this.jumpToId).subscribe(
-        () => {},
+        () => {
+          this.zone.run(() => this.router.navigate([``]));
+        },
         (error) => {
           console.error('Error fetching Pokémon:', error);
+          this.zone.run(() => this.router.navigate([``]));
         }
       );
     }

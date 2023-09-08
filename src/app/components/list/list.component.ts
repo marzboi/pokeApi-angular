@@ -76,26 +76,12 @@ export class ListComponent {
         : this.jumpToId;
 
       this.pokemonService.jumpToPokemon(this.jumpToId).subscribe(
-        () => {
-          const index = this.pokemons.findIndex(
-            (pokemon) => pokemon.id === this.jumpToId
-          );
-          this.scrollToPokemon(index);
-        },
+        () => {},
         (error) => {
           console.error('Error fetching Pokémon:', error);
         }
       );
     }
-  }
-
-  scrollToPokemon(index: number) {
-    setTimeout(() => {
-      const pokemonElement = document.getElementById(
-        'pokemon-' + this.pokemons[index].id
-      );
-      pokemonElement?.scrollIntoView({ behavior: 'smooth' });
-    }, 0);
   }
 
   goBackUp() {

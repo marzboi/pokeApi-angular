@@ -24,6 +24,7 @@ export class SearchComponent {
     });
   }
   handlePokemonById() {
+    if (!this.form.value.search || this.form.value.search.includes(' ')) return;
     this.zone.run(() => this.router.navigate(['loading']));
     this.pokemonService
       .getSinglePokemonById(this.form.value.search)

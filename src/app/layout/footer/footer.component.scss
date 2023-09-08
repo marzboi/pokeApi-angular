@@ -1,8 +1,16 @@
 footer {
   padding: 1rem 0;
   display: flex;
+  font-size: 0.7rem;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   background-color: black;
+  justify-content: space-around;
+
+  .links {
+    i {
+      scale: 1.5;
+      margin: 0 0.5rem;
+    }
+  }
 }

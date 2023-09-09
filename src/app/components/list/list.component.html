@@ -15,7 +15,7 @@
         <span>{{item.name.slice(0, 1).toUpperCase() + item.name.slice(1)}} </span>
       </div>
       <div>
-        <img class="card-img-top" [src]="currentSpriteUrls[item.id]" alt="{{item.name}}" width="150" height="150"
+        <img class="card-img-top" [src]="currentSpriteUrls[item.id]" alt="{{item.name}}" height=150
           (click)="handleNavigaToDetails(item.id)">
       </div>
     </li>

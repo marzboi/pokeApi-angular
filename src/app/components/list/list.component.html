@@ -1,6 +1,7 @@
 <div class="jump">
-  <label for="jumpToId">Start from Index </label>
-  <input type="number" id="jumpToId" [(ngModel)]="jumpToId" (keyup.enter)="jumpToPokemon()" min="1" max="1010">
+  <!-- <label for="jumpToId">Start from Index </label> -->
+  <input type="number" id="jumpToId" [(ngModel)]="jumpToId" (keyup.enter)="jumpToPokemon()" min="1" max="1010"
+    placeholder="Jump to ID">
   <i class="fa-solid fa-play" (click)="jumpToPokemon()"></i>
 </div>
 

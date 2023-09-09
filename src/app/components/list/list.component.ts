@@ -58,7 +58,7 @@ export class ListComponent {
   }
 
   getStaticSpriteUrl(item: PokemonDetails): string {
-    return item.sprites.front_default || 'path/to/default/image.png';
+    return item.sprites.front_default || 'assets/default.png';
   }
 
   getGifSpriteUrl(item: PokemonDetails): string {

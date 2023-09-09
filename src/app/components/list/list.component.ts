@@ -90,9 +90,11 @@ export class ListComponent {
       Swal.fire({
         title: 'Ummm',
         text: 'Enter a number between 1 and 1010',
-        icon: 'error',
+        icon: 'warning',
         confirmButtonText: 'Oki',
         toast: true,
+        confirmButtonColor: '#fff01f',
+        iconColor: '#fff01f',
       });
     }
   }

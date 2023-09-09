@@ -3,12 +3,6 @@
   margin: 1rem;
   form {
     display: flex;
-    label {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      align-content: center;
-    }
 
     input {
       width: 6rem;
@@ -24,9 +18,10 @@
         outline: none;
         background: #fff;
         color: #000;
-        width: 10rem;
+        width: 12rem;
       }
     }
+
     button {
       all: unset;
       scale: 2;

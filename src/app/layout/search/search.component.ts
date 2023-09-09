@@ -31,9 +31,11 @@ export class SearchComponent {
       Swal.fire({
         title: 'Hey!',
         text: 'Enter a valid ID or Name',
-        icon: 'error',
+        icon: 'warning',
         confirmButtonText: 'Cool',
         toast: true,
+        confirmButtonColor: '#fff01f',
+        iconColor: '#fff01f',
       });
       return;
     }

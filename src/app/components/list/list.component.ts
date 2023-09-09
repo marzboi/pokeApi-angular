@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { PokemonDetails } from 'src/app/types/api-response';
 import { faHandPointUp } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list',
@@ -68,8 +69,8 @@ export class ListComponent {
   }
 
   jumpToPokemon() {
-    this.zone.run(() => this.router.navigate([`loading`]));
     if (this.jumpToId !== null) {
+      this.zone.run(() => this.router.navigate([`loading`]));
       this.jumpToId < 1
         ? (this.jumpToId = 1)
         : this.jumpToId > 1010
@@ -85,6 +86,14 @@ export class ListComponent {
           this.zone.run(() => this.router.navigate([``]));
         }
       );
+    } else {
+      Swal.fire({
+        title: 'Ummm',
+        text: 'Enter a number between 1 and 1010',
+        icon: 'error',
+        confirmButtonText: 'Oki',
+        toast: true,
+      });
     }
   }
 

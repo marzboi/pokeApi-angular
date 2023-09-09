@@ -16,6 +16,8 @@ ul {
     background: url("https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png");
     text-align: center;
     font-size: 0.9rem;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
 
     @media (max-width: 1440px) {
       flex-basis: calc(100% / 6);
@@ -44,18 +46,21 @@ ul {
         margin: 0.2rem 0;
       }
     }
+    .card-body div {
+      background-color: #f0f0f0;
+    }
 
     .card-img-top {
-      max-width: 150px;
-      max-height: 150px;
+      width: 150px;
+      height: 150px;
       object-fit: contain;
-      transition: transform 0.5s ease-in-out;
-      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
     }
-
-    .card-img-top:hover {
-      transform: rotateY(360deg);
-    }
+  }
+  li:hover {
+    transform: scale(1.1);
+    box-shadow: #fff01f 0px 0px 10px 0px;
+    border: #fff01f 3px solid;
   }
 }
 
@@ -64,6 +69,11 @@ ul {
   justify-content: center;
   align-items: center;
   margin: 1rem;
+
+  i {
+    scale: 1.8;
+    margin: 0 0.5rem;
+  }
 
   input {
     width: 5rem;
@@ -76,21 +86,6 @@ ul {
     color: #fff;
     background: #000;
     transition: all 0.3s ease;
-  }
-
-  button {
-    padding: 0.5rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    font-family: inherit;
-    color: #fff;
-    background: #000;
-    transition: all 0.3s ease;
-    &:hover {
-      background: #fff;
-      color: #000;
-    }
   }
 }
 

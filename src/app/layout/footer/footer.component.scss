@@ -1,7 +1,7 @@
 footer {
   padding: 1rem 0;
   display: flex;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   align-items: center;
   justify-content: center;
   background-color: black;
@@ -10,7 +10,14 @@ footer {
   .links {
     i {
       scale: 1.5;
-      margin: 0 0.5rem;
+      margin: 0 1rem;
+      transition: transform 0.3s ease-in-out;
+    }
+    a {
+      color: white;
+    }
+    i:hover {
+      transform: scale(1.3);
     }
   }
 }

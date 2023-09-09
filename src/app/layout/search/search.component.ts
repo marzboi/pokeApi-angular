@@ -5,6 +5,7 @@ import { catchError } from 'rxjs';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { PokemonDetails } from 'src/app/types/api-response';
 import { faHandPointRight } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-search',
@@ -26,7 +27,16 @@ export class SearchComponent {
     });
   }
   handlePokemonById() {
-    if (!this.form.value.search || this.form.value.search.includes(' ')) return;
+    if (!this.form.value.search || this.form.value.search.includes(' ')) {
+      Swal.fire({
+        title: 'Hey!',
+        text: 'Enter a valid ID or Name',
+        icon: 'error',
+        confirmButtonText: 'Cool',
+        toast: true,
+      });
+      return;
+    }
     this.zone.run(() => this.router.navigate(['loading']));
     this.pokemonService
       .getSinglePokemonById(this.form.value.search)

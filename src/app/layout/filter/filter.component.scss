@@ -5,8 +5,13 @@
   align-items: center;
   margin: 1rem;
 
+  i {
+    scale: 2;
+    margin: 0 0.5rem;
+  }
+
   select {
-    width: 30%;
+    width: 6rem;
     margin: 0 0.6rem;
     padding: 0.5rem;
     border: none;

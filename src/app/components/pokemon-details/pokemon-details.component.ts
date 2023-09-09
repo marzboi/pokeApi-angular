@@ -39,7 +39,6 @@ export class PokemonDetailsComponent {
       this.pokemon = this.pokemonService.pokemon$.value;
       this.loading = false;
       this.id--;
-      console.log(this.id);
     });
   }
 
@@ -49,7 +48,6 @@ export class PokemonDetailsComponent {
       this.pokemon = this.pokemonService.pokemon$.value;
       this.loading = false;
       this.id++;
-      console.log(this.id);
     });
   }
 
@@ -67,10 +65,12 @@ export class PokemonDetailsComponent {
 
   scrollToPokemon(index: number) {
     setTimeout(() => {
-      const pokemonElement = document.getElementById(
-        'pokemon-' + this.pokemons[index].id
-      );
-      pokemonElement?.scrollIntoView({ behavior: 'instant' });
+      if (this.pokemons.find((pokemon) => pokemon.id === index)) {
+        const pokemonElement = document.getElementById(
+          'pokemon-' + this.pokemons[index].id
+        );
+        pokemonElement?.scrollIntoView({ behavior: 'instant' });
+      }
     }, 0);
   }
 }

@@ -1,7 +1,8 @@
 <div class="navmenu-search">
   <form [formGroup]="form" (ngSubmit)="handlePokemonById()">
-    <label for="search">Search by name / index</label>
-    <input type="text" id='search' formControlName="search" />
-    <button><fa-icon [icon]="faPoint"></fa-icon></button>
+    <input type="text" id='search' formControlName="search" placeholder="Search by name or ID" />
+    <button>
+      <fa-icon [icon]="faPoint" class="icon"></fa-icon>
+    </button>
   </form>
 </div>

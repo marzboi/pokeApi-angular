@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { PokemonService } from 'src/app/services/pokemon.service';
-import { PokemonDetails } from 'src/app/types/api-response';
+import { PokemonDetails, PokemonType } from 'src/app/types/api-response';
 import { faHandPointUp } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 
@@ -17,6 +17,7 @@ export class ListComponent {
   currentSpriteUrls: { [key: number]: string } = {};
   jumpToId: number | null = null;
   hoveringOverImage: { [key: number]: boolean } = {};
+  pokemonType: PokemonType = {} as PokemonType;
   public faHand = faHandPointUp;
 
   constructor(
@@ -58,7 +59,7 @@ export class ListComponent {
   }
 
   getStaticSpriteUrl(item: PokemonDetails): string {
-    return item.sprites.front_default || 'path/to/default/image.png';
+    return item.sprites.front_default || 'assets/default.png';
   }
 
   getGifSpriteUrl(item: PokemonDetails): string {
@@ -105,5 +106,11 @@ export class ListComponent {
 
   setHoverState(id: number, isHovering: boolean) {
     this.hoveringOverImage[id] = isHovering;
+  }
+
+  getTypeImageUrl(item: PokemonDetails, index: number): string | null {
+    return item.types[index]?.type.name
+      ? 'assets/types-list/' + item.types[index]?.type.name + '.png'
+      : null;
   }
 }

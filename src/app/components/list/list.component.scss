@@ -52,9 +52,14 @@ ul {
 
     .card-img-top {
       width: 150px;
-      height: 150px;
       object-fit: contain;
       transition: transform 0.3s ease-in-out;
+      @media (max-width: 600px) {
+        width: 115px;
+      }
+    }
+    .types {
+      margin: 0.3rem 0;
     }
   }
   li:hover {
@@ -82,7 +87,7 @@ ul {
   }
 
   input {
-    width: 5rem;
+    width: 10rem;
     margin: 0 0.6rem;
     padding: 0.6rem;
     border: none;
@@ -91,6 +96,12 @@ ul {
     font-size: 0.8rem;
     color: #fff;
     background: #000;
+    transition: all 1s ease;
+    &:focus {
+      outline: none;
+      background: #fff;
+      color: #000;
+    }
   }
 
   @media (max-width: 600px) {

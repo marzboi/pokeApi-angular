@@ -6,20 +6,34 @@
     </div>
 
     <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src={{pokemon.sprites.front_default}} alt={{pokemon.name}}>
+      <img class="card-img-top" src={{getStaticSpriteUrl(pokemon)}} alt={{pokemon.name}}>
+      <img class="card-img-top" src={{getStaticSpriteUrlBack(pokemon)}} alt={{pokemon.name}}>
+      <img class="card-img-top" src={{getGifSpriteUrl(pokemon)}} alt={{pokemon.name}}>
       <div class="card-body">
         <h1 class="card-title">{{pokemon.name.slice(0, 1).toUpperCase() + pokemon.name.slice(1)}}</h1>
         <p class="card-text">
           <span>Index: #{{pokemon.id}}</span>
           <span>Height: {{pokemon.height}} cm</span>
           <span>Weight: {{pokemon.weight}} Kg</span>
+          <span>HP:{{pokemonStats.hp}}</span>
+          <span>Attack:{{pokemonStats.attack}}</span>
+          <span>Defense:{{pokemonStats.defense}}</span>
+          <span>Special Attack:{{pokemonStats.special_attack}}</span>
+          <span>Special Defense:{{pokemonStats.special_defense}}</span>
+          <span>Speed:{{pokemonStats.speed}}</span>
+          <img *ngIf="pokemonType?.type_1"
+            [src]="pokemonType.type_1 ? 'assets/types/' + pokemonType.type_1 + '.png' : null" />
+          <img *ngIf="pokemonType?.type_2"
+            [src]="pokemonType.type_2 ? 'assets/types/' + pokemonType.type_2 + '.png' : null" />
         </p>
       </div>
     </div>
 
+
     <div class="button-container">
       <mat-icon fontIcon="arrow_forward" (click)="loadNext()" *ngIf="id <= 10270"></mat-icon>
     </div>
+
   </div>
 
   <div>

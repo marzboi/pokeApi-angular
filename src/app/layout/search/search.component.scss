@@ -3,28 +3,27 @@
   margin: 1rem;
   form {
     display: flex;
-
     input {
-      width: 6rem;
-      margin: 0 1rem;
-      padding: 0.5rem;
+      width: auto;
+      margin: 0 0.6rem;
+      padding: 0.6rem;
       border: none;
       border-radius: 0.5rem;
       font-family: inherit;
       color: #fff;
       background: #000;
-      transition: all 0.3s ease;
+      transition: all 1s ease;
       &:focus {
         outline: none;
         background: #fff;
         color: #000;
-        width: 17rem;
       }
     }
 
     button {
       all: unset;
       scale: 2;
+      margin: 0 0.5rem;
       cursor: pointer;
     }
     button:hover {

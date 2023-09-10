@@ -1,8 +1,11 @@
 import { Component, NgZone } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PokemonService } from 'src/app/services/pokemon.service';
-import { PokemonDetails } from 'src/app/types/api-response';
-
+import {
+  PokemonDetails,
+  PokemonStats,
+  PokemonType,
+} from 'src/app/types/api-response';
 @Component({
   selector: 'app-pokemon-details',
   templateUrl: './pokemon-details.component.html',
@@ -14,6 +17,8 @@ export class PokemonDetailsComponent {
   loading: boolean = true;
   id: number = 0;
   pokemons: PokemonDetails[] = [];
+  pokemonStats: PokemonStats = {} as PokemonStats;
+  pokemonType: PokemonType = {} as PokemonType;
   constructor(
     private pokemonService: PokemonService,
     private route: ActivatedRoute,
@@ -26,6 +31,10 @@ export class PokemonDetailsComponent {
         this.id = Number(params['id']);
         this.pokemon = this.pokemonService.pokemon$.value;
         this.loading = false;
+        if (this.pokemon) {
+          this.getStatsFromPokemon(this.pokemon);
+          this.getTypesForPokemon(this.pokemon);
+        }
       });
     });
     this.pokemonService.pokemonsList$.subscribe((pokemons) => {
@@ -39,6 +48,10 @@ export class PokemonDetailsComponent {
       this.pokemon = this.pokemonService.pokemon$.value;
       this.loading = false;
       this.id--;
+      if (this.pokemon) {
+        this.getStatsFromPokemon(this.pokemon);
+        this.getTypesForPokemon(this.pokemon);
+      }
     });
   }
 
@@ -48,6 +61,10 @@ export class PokemonDetailsComponent {
       this.pokemon = this.pokemonService.pokemon$.value;
       this.loading = false;
       this.id++;
+      if (this.pokemon) {
+        this.getStatsFromPokemon(this.pokemon);
+        this.getTypesForPokemon(this.pokemon);
+      }
     });
   }
 
@@ -72,5 +89,38 @@ export class PokemonDetailsComponent {
         pokemonElement?.scrollIntoView({ behavior: 'instant' });
       }
     }, 0);
+  }
+
+  getStaticSpriteUrl(item: PokemonDetails): string {
+    return item.sprites.front_default || 'assets/default.png';
+  }
+
+  getStaticSpriteUrlBack(item: PokemonDetails): string {
+    return item.sprites.back_default || 'assets/default.png';
+  }
+
+  getGifSpriteUrl(item: PokemonDetails): string {
+    return (
+      item.sprites.versions?.['generation-v']?.['black-white']?.animated
+        ?.front_default || this.getStaticSpriteUrl(item)
+    );
+  }
+
+  getStatsFromPokemon(item: PokemonDetails) {
+    this.pokemonStats = {
+      hp: item.stats[0].base_stat,
+      attack: item.stats[1].base_stat,
+      defense: item.stats[2].base_stat,
+      special_attack: item.stats[3].base_stat,
+      special_defense: item.stats[4].base_stat,
+      speed: item.stats[5].base_stat,
+    };
+  }
+
+  getTypesForPokemon(item: PokemonDetails) {
+    this.pokemonType = {
+      type_1: item.types[0]?.type.name,
+      type_2: item.types[1]?.type.name,
+    };
   }
 }

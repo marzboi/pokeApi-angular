@@ -52,3 +52,17 @@ export interface Type {
     url: string;
   };
 }
+
+export interface PokemonStats {
+  hp: number;
+  attack: number;
+  defense: number;
+  special_attack: number;
+  special_defense: number;
+  speed: number;
+}
+
+export interface PokemonType {
+  type_1?: string;
+  type_2?: string;
+}

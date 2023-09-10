@@ -18,6 +18,10 @@
           <span>Special Attack:{{pokemonStats.special_attack}}</span>
           <span>Special Defense:{{pokemonStats.special_defense}}</span>
           <span>Speed:{{pokemonStats.speed}}</span>
+          <img *ngIf="pokemonType?.type_1"
+            [src]="pokemonType.type_1 ? 'assets/types/' + pokemonType.type_1 + '.png' : null" />
+          <img *ngIf="pokemonType?.type_2"
+            [src]="pokemonType.type_2 ? 'assets/types/' + pokemonType.type_2 + '.png' : null" />
         </p>
       </div>
     </div>

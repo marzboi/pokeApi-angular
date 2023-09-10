@@ -1,16 +1,11 @@
 import { Component, NgZone } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PokemonService } from 'src/app/services/pokemon.service';
-import { PokemonDetails, Stat } from 'src/app/types/api-response';
-
-interface PokemonStats {
-  hp: number;
-  attack: number;
-  defense: number;
-  special_attack: number;
-  special_defense: number;
-  speed: number;
-}
+import {
+  PokemonDetails,
+  PokemonStats,
+  PokemonType,
+} from 'src/app/types/api-response';
 @Component({
   selector: 'app-pokemon-details',
   templateUrl: './pokemon-details.component.html',
@@ -23,6 +18,7 @@ export class PokemonDetailsComponent {
   id: number = 0;
   pokemons: PokemonDetails[] = [];
   pokemonStats: PokemonStats = {} as PokemonStats;
+  pokemonType: PokemonType = {} as PokemonType;
   constructor(
     private pokemonService: PokemonService,
     private route: ActivatedRoute,
@@ -37,6 +33,7 @@ export class PokemonDetailsComponent {
         this.loading = false;
         if (this.pokemon) {
           this.getStatsFromPokemon(this.pokemon);
+          this.getTypesForPokemon(this.pokemon);
         }
       });
     });
@@ -53,6 +50,7 @@ export class PokemonDetailsComponent {
       this.id--;
       if (this.pokemon) {
         this.getStatsFromPokemon(this.pokemon);
+        this.getTypesForPokemon(this.pokemon);
       }
     });
   }
@@ -65,6 +63,7 @@ export class PokemonDetailsComponent {
       this.id++;
       if (this.pokemon) {
         this.getStatsFromPokemon(this.pokemon);
+        this.getTypesForPokemon(this.pokemon);
       }
     });
   }
@@ -115,6 +114,13 @@ export class PokemonDetailsComponent {
       special_attack: item.stats[3].base_stat,
       special_defense: item.stats[4].base_stat,
       speed: item.stats[5].base_stat,
+    };
+  }
+
+  getTypesForPokemon(item: PokemonDetails) {
+    this.pokemonType = {
+      type_1: item.types[0]?.type.name,
+      type_2: item.types[1]?.type.name,
     };
   }
 }

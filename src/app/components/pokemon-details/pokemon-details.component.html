@@ -1,6 +1,9 @@
 <section *ngIf="!loading && pokemon">
 
   <div class="details">
+    <div class="button-container">
+      <mat-icon fontIcon="arrow_back" (click)="loadPrevious()" *ngIf="id >= 2"></mat-icon>
+    </div>
 
     <div class="card" style="width: 18rem;">
       <img class="card-img-top" src={{getStaticSpriteUrl(pokemon)}} alt={{pokemon.name}}>
@@ -26,9 +29,6 @@
       </div>
     </div>
 
-    <div class="button-container">
-      <mat-icon fontIcon="arrow_back" (click)="loadPrevious()" *ngIf="id >= 2"></mat-icon>
-    </div>
 
     <div class="button-container">
       <mat-icon fontIcon="arrow_forward" (click)="loadNext()" *ngIf="id <= 10270"></mat-icon>

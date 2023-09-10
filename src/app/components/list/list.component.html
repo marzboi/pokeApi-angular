@@ -19,6 +19,10 @@
         <img class="card-img-top" [src]="currentSpriteUrls[item.id]" alt="{{item.name}}" height=150
           (click)="handleNavigaToDetails(item.id)">
       </div>
+      <div class="types">
+        <img *ngIf="item" [src]="getTypeImageUrl(item, 0)" />
+        <img *ngIf="item" [src]="getTypeImageUrl(item, 1)" />
+      </div>
     </li>
   </ul>
 </div>

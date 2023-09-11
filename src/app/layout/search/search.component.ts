@@ -41,7 +41,7 @@ export class SearchComponent {
     }
     this.zone.run(() => this.router.navigate(['loading']));
     this.pokemonService
-      .getSinglePokemonById(this.form.value.search)
+      .getSinglePokemonById(this.form.value.search.toLowerCase())
       .pipe(
         catchError(() => {
           this.zone.run(() => this.router.navigate(['error']));

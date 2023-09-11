@@ -102,7 +102,7 @@ export class PokemonDetailsComponent {
   getGifSpriteUrl(item: PokemonDetails): string {
     return (
       item.sprites.versions?.['generation-v']?.['black-white']?.animated
-        ?.front_default || this.getStaticSpriteUrl(item)
+        ?.front_default || 'assets/default.png'
     );
   }
 

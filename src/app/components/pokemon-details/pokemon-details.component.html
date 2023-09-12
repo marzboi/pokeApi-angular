@@ -2,7 +2,7 @@
 
   <div class="details">
     <div class="button-container">
-      <i (click)="loadPrevious()" class="fa-solid fa-angles-left" *ngIf="id >= 2"></i>
+      <i (click)="loadPrevious()" class="fa-solid fa-angles-left" *ngIf="id >= 2 && id !== 10001"></i>
     </div>
 
     <div class="card">
@@ -38,7 +38,7 @@
 
 
     <div class="button-container">
-      <i (click)="loadNext()" class="fa-solid fa-angles-right" *ngIf="id <= 10270"></i>
+      <i (click)="loadNext()" class="fa-solid fa-angles-right" *ngIf="id <= 10270 && id !== 1010"></i>
     </div>
 
   </div>

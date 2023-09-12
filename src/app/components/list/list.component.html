@@ -1,11 +1,3 @@
-<div class="jump">
-  <!-- <label for="jumpToId">Start from Index </label> -->
-  <input type="number" id="jumpToId" [(ngModel)]="jumpToId" (keyup.enter)="jumpToPokemon()" min="1" max="1010"
-    placeholder="Jump to ID">
-  <i class="fa-solid fa-play" (click)="jumpToPokemon()"></i>
-</div>
-
-
 <div infiniteScroll [infiniteScrollDistance]="2" (scrolled)="onScroll()">
   <ul>
     <li *ngFor="let item of pokemons; let i = index" class="card" [id]="'pokemon-' + item.id"

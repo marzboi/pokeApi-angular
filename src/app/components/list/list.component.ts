@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { PokemonDetails, PokemonType } from 'src/app/types/api-response';
 import { faHandPointUp } from '@fortawesome/free-solid-svg-icons';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list',
@@ -15,7 +14,6 @@ export class ListComponent {
   next: string | null = null;
   isLoading: boolean = false;
   currentSpriteUrls: { [key: number]: string } = {};
-  jumpToId: number | null = null;
   hoveringOverImage: { [key: number]: boolean } = {};
   pokemonType: PokemonType = {} as PokemonType;
   public faHand = faHandPointUp;
@@ -67,37 +65,6 @@ export class ListComponent {
       item.sprites.versions?.['generation-v']?.['black-white']?.animated
         ?.front_default || this.getStaticSpriteUrl(item)
     );
-  }
-
-  jumpToPokemon() {
-    if (this.jumpToId !== null) {
-      this.zone.run(() => this.router.navigate([`loading`]));
-      this.jumpToId < 1
-        ? (this.jumpToId = 1)
-        : this.jumpToId > 1010
-        ? (this.jumpToId = 1010)
-        : this.jumpToId;
-
-      this.pokemonService.jumpToPokemon(this.jumpToId).subscribe(
-        () => {
-          this.zone.run(() => this.router.navigate([``]));
-        },
-        (error) => {
-          console.error('Error fetching Pokémon:', error);
-          this.zone.run(() => this.router.navigate([``]));
-        }
-      );
-    } else {
-      Swal.fire({
-        title: 'Ummm',
-        text: 'Enter a number between 1 and 1010',
-        icon: 'warning',
-        confirmButtonText: 'Oki',
-        toast: true,
-        confirmButtonColor: '#fff01f',
-        iconColor: '#fff01f',
-      });
-    }
   }
 
   goBackUp() {

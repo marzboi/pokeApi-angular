@@ -123,6 +123,14 @@ section {
       display: flex;
       justify-content: space-between;
       margin-bottom: 1rem;
+      button:hover {
+        animation: beat 1s infinite alternate;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        animation: none;
+      }
     }
   }
 

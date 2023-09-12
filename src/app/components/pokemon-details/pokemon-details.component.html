@@ -2,43 +2,49 @@
 
   <div class="details">
     <div class="button-container">
-      <mat-icon fontIcon="arrow_back" (click)="loadPrevious()" *ngIf="id >= 2"></mat-icon>
+      <i (click)="loadPrevious()" class="fa-solid fa-angles-left" *ngIf="id >= 2"></i>
     </div>
 
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src={{getStaticSpriteUrl(pokemon)}} alt={{pokemon.name}}>
-      <img class="card-img-top" src={{getStaticSpriteUrlBack(pokemon)}} alt={{pokemon.name}}>
-      <img class="card-img-top" src={{getGifSpriteUrl(pokemon)}} alt={{pokemon.name}}>
+    <div class="card">
+      <div class="card-images">
+        <img *ngFor="let img of pokemonImages; let i = index" [src]="img" [alt]="pokemon.name"
+          [class.active]="i === currentImageIndex" class="card-img-top">
+      </div>
+      <div class="carousel-controls">
+        <button (click)="prevImage()" [disabled]="currentImageIndex === 0">Prev</button>
+        <button (click)="nextImage()" [disabled]="currentImageIndex === pokemonImages.length - 1">Next</button>
+      </div>
       <div class="card-body">
-        <h1 class="card-title">{{pokemon.name.slice(0, 1).toUpperCase() + pokemon.name.slice(1)}}</h1>
+        <h1 class="card-title">Name: {{pokemon.name.slice(0, 1).toUpperCase() + pokemon.name.slice(1)}}</h1>
         <p class="card-text">
-          <span>Index: #{{pokemon.id}}</span>
-          <span>Height: {{pokemon.height}} cm</span>
-          <span>Weight: {{pokemon.weight}} Kg</span>
-          <span>HP:{{pokemonStats.hp}}</span>
-          <span>Attack:{{pokemonStats.attack}}</span>
-          <span>Defense:{{pokemonStats.defense}}</span>
-          <span>Special Attack:{{pokemonStats.special_attack}}</span>
-          <span>Special Defense:{{pokemonStats.special_defense}}</span>
-          <span>Speed:{{pokemonStats.speed}}</span>
+          <span> <u>Index</u>: #{{pokemon.id}}</span>
+          <span><u>Height</u>: {{((pokemon.height / 10).toFixed(1))}} m</span>
+          <span><u>Weight</u>: {{(pokemon.weight / 10).toFixed(1)}} Kg</span>
+          <span><u>HP</u>: {{pokemonStats.hp}}</span>
+          <span><u>Attack</u>: {{pokemonStats.attack}}</span>
+          <span><u>Defense</u>: {{pokemonStats.defense}}</span>
+          <span><u>Special Attack</u>: {{pokemonStats.special_attack}}</span>
+          <span><u>Special Defense</u>: {{pokemonStats.special_defense}}</span>
+          <span><u>Speed</u>: {{pokemonStats.speed}}</span>
+        </p>
+        <div class="type-img">
           <img *ngIf="pokemonType?.type_1"
             [src]="pokemonType.type_1 ? 'assets/types/' + pokemonType.type_1 + '.png' : null" />
           <img *ngIf="pokemonType?.type_2"
             [src]="pokemonType.type_2 ? 'assets/types/' + pokemonType.type_2 + '.png' : null" />
-        </p>
+        </div>
       </div>
     </div>
 
 
     <div class="button-container">
-      <mat-icon fontIcon="arrow_forward" (click)="loadNext()" *ngIf="id <= 10270"></mat-icon>
+      <i (click)="loadNext()" class="fa-solid fa-angles-right" *ngIf="id <= 10270"></i>
     </div>
 
   </div>
 
   <div>
-    <mat-icon class='return' (click)="handleNavigateHome()">arrow_back</mat-icon>
-    <mat-icon class='return' (click)="handleNavigateHome()">apps</mat-icon>
+    <i (click)="handleNavigateHome()" class="fa-solid fa-people-pulling"></i>
   </div>
 </section>
 

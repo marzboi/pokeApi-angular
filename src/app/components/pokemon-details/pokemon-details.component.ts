@@ -19,6 +19,8 @@ export class PokemonDetailsComponent {
   pokemons: PokemonDetails[] = [];
   pokemonStats: PokemonStats = {} as PokemonStats;
   pokemonType: PokemonType = {} as PokemonType;
+  currentImageIndex = 0;
+  pokemonImages: string[] = [];
   constructor(
     private pokemonService: PokemonService,
     private route: ActivatedRoute,
@@ -34,6 +36,11 @@ export class PokemonDetailsComponent {
         if (this.pokemon) {
           this.getStatsFromPokemon(this.pokemon);
           this.getTypesForPokemon(this.pokemon);
+          this.pokemonImages = [
+            this.getStaticSpriteUrl(this.pokemon),
+            this.getStaticSpriteUrlBack(this.pokemon),
+            this.getGifSpriteUrl(this.pokemon),
+          ];
         }
       });
     });
@@ -51,6 +58,11 @@ export class PokemonDetailsComponent {
       if (this.pokemon) {
         this.getStatsFromPokemon(this.pokemon);
         this.getTypesForPokemon(this.pokemon);
+        this.pokemonImages = [
+          this.getStaticSpriteUrl(this.pokemon),
+          this.getStaticSpriteUrlBack(this.pokemon),
+          this.getGifSpriteUrl(this.pokemon),
+        ];
       }
     });
   }
@@ -64,6 +76,11 @@ export class PokemonDetailsComponent {
       if (this.pokemon) {
         this.getStatsFromPokemon(this.pokemon);
         this.getTypesForPokemon(this.pokemon);
+        this.pokemonImages = [
+          this.getStaticSpriteUrl(this.pokemon),
+          this.getStaticSpriteUrlBack(this.pokemon),
+          this.getGifSpriteUrl(this.pokemon),
+        ];
       }
     });
   }
@@ -122,5 +139,17 @@ export class PokemonDetailsComponent {
       type_1: item.types[0]?.type.name,
       type_2: item.types[1]?.type.name,
     };
+  }
+
+  nextImage() {
+    if (this.currentImageIndex < this.pokemonImages.length - 1) {
+      this.currentImageIndex++;
+    }
+  }
+
+  prevImage() {
+    if (this.currentImageIndex > 0) {
+      this.currentImageIndex--;
+    }
   }
 }

@@ -2,14 +2,13 @@
   <ul>
     <li *ngFor="let item of pokemons; let i = index" class="card" [id]="'pokemon-' + item.id"
       (mouseover)="currentSpriteUrls[item.id] = getGifSpriteUrl(item)"
-      (mouseout)="currentSpriteUrls[item.id] = getStaticSpriteUrl(item)">
+      (mouseout)="currentSpriteUrls[item.id] = getStaticSpriteUrl(item)" (click)="handleNavigaToDetails(item.id)">
       <div class="card-body">
         <span>#{{item.id}} </span>
         <span>{{item.name.slice(0, 1).toUpperCase() + item.name.slice(1)}} </span>
       </div>
       <div>
-        <img class="card-img-top" [src]="currentSpriteUrls[item.id]" alt="{{item.name}}" height=150
-          (click)="handleNavigaToDetails(item.id)">
+        <img class="card-img-top" [src]="currentSpriteUrls[item.id]" alt="{{item.name}}" height=150>
       </div>
       <div class="types">
         <img *ngIf="item" [src]="getTypeImageUrl(item, 0)" />

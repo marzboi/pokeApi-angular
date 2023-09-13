@@ -7,9 +7,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from './layout/layout.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
+import { BehaviorSubject, map, of } from 'rxjs';
+import { PokemonService } from './services/pokemon.service';
+import { Router } from '@angular/router';
+import { PokemonDetails } from './types/api-response';
 
 describe('AppComponent', () => {
-  beforeEach(() =>
+  let routerMock: { navigate: jasmine.Spy };
+  const pokemonServiceMock = {
+    getPokemons: jasmine
+      .createSpy('getPokemons')
+      .and.returnValue(of(null).pipe(map(() => {}))),
+    pokemonsList$: new BehaviorSubject<PokemonDetails[]>([]),
+    pokemon$: new BehaviorSubject<PokemonDetails | null>(null),
+  };
+
+  beforeEach(() => {
+    routerMock = {
+      navigate: jasmine.createSpy('navigate'),
+    };
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
@@ -21,8 +37,12 @@ describe('AppComponent', () => {
         BrowserAnimationsModule,
       ],
       declarations: [AppComponent],
-    })
-  );
+      providers: [
+        { provide: PokemonService, useValue: pokemonServiceMock },
+        { provide: Router, useValue: routerMock },
+      ],
+    });
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -34,5 +54,16 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('pokeApi');
+  });
+
+  it('should navigate to "loading" and then the Main List on ngOnInit', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+
+    app.ngOnInit();
+
+    expect(routerMock.navigate).toHaveBeenCalledWith(['loading']);
+    expect(routerMock.navigate).toHaveBeenCalledWith(['']);
+    expect(pokemonServiceMock.getPokemons).toHaveBeenCalled();
   });
 });

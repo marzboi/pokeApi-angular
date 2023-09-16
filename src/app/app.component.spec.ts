@@ -1,12 +1,48 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ComponentsModule } from './components/components.module';
+import { HttpClientModule } from '@angular/common/http';
+import { LayoutModule } from './layout/layout.module';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BehaviorSubject, map, of } from 'rxjs';
+import { PokemonService } from './services/pokemon.service';
+import { Router } from '@angular/router';
+import { PokemonDetails } from './types/api-response';
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent]
-  }));
+  let routerMock: { navigate: jasmine.Spy };
+  const pokemonServiceMock = {
+    getPokemons: jasmine
+      .createSpy('getPokemons')
+      .and.returnValue(of(null).pipe(map(() => {}))),
+    pokemonsList$: new BehaviorSubject<PokemonDetails[]>([]),
+    pokemon$: new BehaviorSubject<PokemonDetails | null>(null),
+  };
+
+  beforeEach(() => {
+    routerMock = {
+      navigate: jasmine.createSpy('navigate'),
+    };
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+        BrowserModule,
+        AppRoutingModule,
+        LayoutModule,
+        HttpClientModule,
+        ComponentsModule,
+        BrowserAnimationsModule,
+      ],
+      declarations: [AppComponent],
+      providers: [
+        { provide: PokemonService, useValue: pokemonServiceMock },
+        { provide: Router, useValue: routerMock },
+      ],
+    });
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -20,10 +56,14 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('pokeApi');
   });
 
-  it('should render title', () => {
+  it('should navigate to "loading" and then the Main List on ngOnInit', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('pokeApi app is running!');
+    const app = fixture.componentInstance;
+
+    app.ngOnInit();
+
+    expect(routerMock.navigate).toHaveBeenCalledWith(['loading']);
+    expect(routerMock.navigate).toHaveBeenCalledWith(['']);
+    expect(pokemonServiceMock.getPokemons).toHaveBeenCalled();
   });
 });

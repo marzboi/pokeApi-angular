@@ -27,7 +27,7 @@ export class SearchComponent {
     });
   }
   handlePokemonById() {
-    if (!this.form.value.search || this.form.value.search.includes(' ')) {
+    if (!/^[a-zA-Z0-9]+$/.test(this.form.value.search)) {
       Swal.fire({
         title: 'Hey!',
         text: 'Enter a valid ID or Name',

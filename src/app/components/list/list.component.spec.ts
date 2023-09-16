@@ -6,7 +6,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PokemonDetails } from 'src/app/types/api-response';
 import { PokemonService } from 'src/app/services/pokemon.service';
-import { NgZone } from '@angular/core';
 import { BehaviorSubject, of, throwError } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';

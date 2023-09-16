@@ -6,6 +6,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PokemonDetails } from 'src/app/types/api-response';
 import { PokemonService } from 'src/app/services/pokemon.service';
+import { NgZone } from '@angular/core';
+import { BehaviorSubject, of, throwError } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -137,6 +141,90 @@ describe('ListComponent', () => {
       component.setHoverState(1, false);
 
       expect(component.hoveringOverImage[1]).toBeFalse();
+    });
+  });
+});
+
+describe('ListComponent - Specific Methods', () => {
+  let component: ListComponent;
+  let fixture: ComponentFixture<ListComponent>;
+  let pokemonService: PokemonService;
+  let router: Router;
+
+  const mockPokemonService = {
+    getPokemons: jasmine.createSpy('getPokemons').and.returnValue(of(null)),
+    next$: new BehaviorSubject<string | null>(null),
+    pokemonsList$: new BehaviorSubject<PokemonDetails[]>([]),
+    pokemon$: new BehaviorSubject<PokemonDetails | null>(null),
+  } as unknown as PokemonService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [ListComponent],
+      imports: [RouterTestingModule, FontAwesomeModule, InfiniteScrollModule],
+      providers: [{ provide: PokemonService, useValue: mockPokemonService }],
+    });
+
+    fixture = TestBed.createComponent(ListComponent);
+    component = fixture.componentInstance;
+    pokemonService = TestBed.inject(PokemonService);
+    router = TestBed.inject(Router);
+    fixture.detectChanges();
+  });
+
+  describe('ngOnInit', () => {
+    it('should set next and pokemons properties and populate currentSpriteUrls based on service observables', () => {
+      mockPokemonService.next$.next('nextUrl');
+      mockPokemonService.pokemonsList$.next([
+        { id: 1, sprites: { front_default: 'url' } } as PokemonDetails,
+      ]);
+
+      component.ngOnInit();
+
+      expect(component.next).toBe('nextUrl');
+      expect(component.pokemons).toEqual([
+        { id: 1, sprites: { front_default: 'url' } } as PokemonDetails,
+      ]);
+      expect(component.currentSpriteUrls).toEqual({ 1: 'url' });
+    });
+  });
+
+  describe('handleNavigaToDetails', () => {
+    it('should navigate to the correct route', () => {
+      spyOn(router, 'navigate');
+      component.handleNavigaToDetails(1);
+
+      expect(router.navigate).toHaveBeenCalledWith(['pokemon/1']);
+    });
+  });
+
+  describe('onScroll', () => {
+    it('should call getPokemons with the correct parameter and handle success correctly', () => {
+      mockPokemonService.next$.next('nextUrl');
+      component.isLoading = false;
+
+      component.onScroll();
+
+      expect(mockPokemonService.getPokemons).toHaveBeenCalledWith('nextUrl');
+      expect(component.isLoading).toBeFalse();
+    });
+
+    it('should handle errors correctly', () => {
+      (mockPokemonService.getPokemons as jasmine.Spy).and.returnValue(
+        throwError('error')
+      );
+      component.isLoading = false;
+      component.onScroll();
+      expect(component.isLoading).toBeFalse();
+    });
+
+    it('should not call getPokemons if next is null', () => {
+      component.next = null;
+      component.isLoading = false;
+
+      component.onScroll();
+
+      expect(mockPokemonService.getPokemons).toHaveBeenCalled();
     });
   });
 });

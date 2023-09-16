@@ -1,5 +1,5 @@
 <div infiniteScroll [infiniteScrollDistance]="2" (scrolled)="onScroll()">
-  <ul>
+  <ul *ngIf="pokemons.length > 1">
     <li *ngFor="let item of pokemons; let i = index" class="card" [id]="'pokemon-' + item.id"
       (mouseover)="currentSpriteUrls[item.id] = getGifSpriteUrl(item)"
       (mouseout)="currentSpriteUrls[item.id] = getStaticSpriteUrl(item)" (click)="handleNavigaToDetails(item.id)">

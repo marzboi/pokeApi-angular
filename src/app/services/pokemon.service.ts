@@ -67,7 +67,7 @@ export class PokemonService {
   }
 
   resetPokemonList() {
-    return this.http.get<ApiResponse>('https://pokeapi.co/api/v2/pokemon').pipe(
+    return this.http.get<ApiResponse>(this.url + 'pokemon').pipe(
       mergeMap((apiResponse) => {
         const detailObservables = apiResponse.results.map((pokemon) => {
           return this.http.get<PokemonDetails>(pokemon.url);
